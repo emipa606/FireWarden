@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Work defined activities -->
+
+  <PelFESimple.reportString>FW: fire fighting with equipment: TargetA.</PelFESimple.reportString>
+
+
+  <!-- Thought based activities -->
+
+  <FWEquipping.reportString>FW: Equipping TargetA.</FWEquipping.reportString>
+  <FWSwapping.reportString>FW: swapping TargetA.</FWSwapping.reportString>
+  <FEReplace.reportString>replacing fire extinguisher.</FEReplace.reportString>
+
+
+  <!-- FWSwapReturn Currently turned off in C# code due to conflict with simple sidearms -->
+
+  <FWSwapReturn.reportString>FW: allocating TargetA.</FWSwapReturn.reportString>
+
+
+  <!-- FWNoSwap Currently not used, handled in C# code instead -->
+
+  <FWNoSwap.reportString>FW: Checking Inventory</FWNoSwap.reportString>
+
+
+</LanguageData>

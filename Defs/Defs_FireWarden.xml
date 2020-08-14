@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- Work defined activities -->
+  <JobDef>
+    <defName>PelFESimple</defName>
+    <driverClass>PelFireWarden.JobDriver_PelFESimple</driverClass>
+    <reportString>FW: fire fighting with equipment: TargetA.</reportString>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+  </JobDef>
+  <WorkTypeDef>
+    <defName>PelFireWarden</defName>
+    <labelShort>Fire Warden</labelShort>
+    <pawnLabel>Fire Warden</pawnLabel>
+    <gerundLabel>firefighting</gerundLabel>
+    <description>Extinguish fires in the colony using firefighting equipment</description>
+    <verb>Extinguish</verb>
+    <naturalPriority>1450</naturalPriority>
+    <alwaysStartActive>true</alwaysStartActive>
+    <requireCapableColonist>true</requireCapableColonist>
+    <workTags>
+      <li>Firefighting</li>
+      <li>Violent</li>
+    </workTags>
+  </WorkTypeDef>
+  <WorkGiverDef>
+    <defName>PelFightFires</defName>
+    <label>fight fires with fire extinguisher</label>
+    <giverClass>PelFireWarden.WorkGiver_PelFWFightFires</giverClass>
+    <workType>PelFireWarden</workType>
+    <emergency>true</emergency>
+    <verb>extinguish</verb>
+    <gerund>extinguishing</gerund>
+    <canBeDoneWhileDrafted>true</canBeDoneWhileDrafted>
+    <autoTakeablePriorityDrafted>20</autoTakeablePriorityDrafted>
+    <forceMote>Mote_FeedbackExtinguish</forceMote>
+  </WorkGiverDef>
+  <!-- Thought based activities -->
+  <ThinkTreeDef>
+    <defName>FWSwapFE</defName>
+    <insertTag>Humanlike_PreMain</insertTag>
+    <insertPriority>100</insertPriority>
+    <thinkRoot Class="PelFireWarden.ThinkNode_ConditionalFWPawnHasClarity">
+      <subNodes>
+        <li Class="ThinkNode_Priority">
+          <subNodes>
+            <li Class="PelFireWarden.JobGiver_FWSwapback" />
+            <li Class="PelFireWarden.JobGiver_FWEquipFW" />
+            <li Class="PelFireWarden.JobGiver_FEAutoReplace" />
+          </subNodes>
+        </li>
+      </subNodes>
+    </thinkRoot>
+  </ThinkTreeDef>
+  <JobDef>
+    <defName>FWEquipping</defName>
+    <driverClass>PelFireWarden.JobDriver_FWEquipping</driverClass>
+    <reportString>FW: Equipping TargetA.</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>FWSwapping</defName>
+    <driverClass>PelFireWarden.JobDriver_FWSwapping</driverClass>
+    <reportString>FW: swapping TargetA.</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>FEReplace</defName>
+    <driverClass>PelFireWarden.JobDriver_FEReplace</driverClass>
+    <reportString>replacing fire extinguisher.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <suspendable>false</suspendable>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+  </JobDef>
+  <!-- FWSwapReturn Currently turned off in C# code due to conflict with simple sidearms -->
+  <JobDef>
+    <defName>FWSwapReturn</defName>
+    <driverClass>PelFireWarden.JobDriver_FWSwapReturn</driverClass>
+    <reportString>FW: allocating TargetA.</reportString>
+  </JobDef>
+  <!-- FWNoSwap Currently not used, handled in C# code instead -->
+  <JobDef>
+    <defName>FWNoSwap</defName>
+    <driverClass>PelFireWarden.JobDriver_FWNoSwap</driverClass>
+    <reportString>FW: Checking Inventory</reportString>
+  </JobDef>
+  <!-- Return Spot -->
+  <!-- Returning conflicts with simple sidearms atm
+	
+	<ThingDef ParentName="BuildingBase">
+    	<defName>FEReturnSpot</defName>
+    	<label>Fire Warden FE Drops</label>
+    	<description>Designates a spot for fire wardens to drop excess fire extinguishers</description>
+		<thingClass>PelFireWarden.FEReturnSpot</thingClass>
+    	<graphicData>
+     		<texPath>Things/Building/Misc/FEReturnSpot/FEReturnSpot</texPath>
+      		<graphicClass>Graphic_Single</graphicClass>
+    	</graphicData>
+    	<altitudeLayer>FloorEmplacement</altitudeLayer>
+    	<statBases>
+      		<WorkToBuild>0</WorkToBuild>
+    	</statBases>
+    	<rotatable>false</rotatable>
+    	<scatterableOnMapGen>false</scatterableOnMapGen>
+		<useHitPoints>False</useHitPoints>
+    	<designationCategory>Misc</designationCategory>
+    	<passability>Standable</passability>
+    	<building>
+			<sowTag>SupportPlantsOnly</sowTag>
+      		<canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
+      		<ai_chillDestination>false</ai_chillDestination>
+    	</building>
+  	</ThingDef>
+	
+	-->
+</Defs>

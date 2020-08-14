@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Work defined activities -->
+
+  <PelFireWarden.label>Fire Warden</PelFireWarden.label>
+  <PelFireWarden.description>Extinguish fires in the colony using firefighting equipment</PelFireWarden.description>
+  <PelFireWarden.labelShort>Fire Warden</PelFireWarden.labelShort>
+  <PelFireWarden.pawnLabel>Fire Warden</PelFireWarden.pawnLabel>
+  <PelFireWarden.gerundLabel>firefighting</PelFireWarden.gerundLabel>
+  <PelFireWarden.verb>Extinguish</PelFireWarden.verb>
+
+
+</LanguageData>
