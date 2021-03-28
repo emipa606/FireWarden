@@ -1,10 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
   <Firebeater.label>Firebeater</Firebeater.label>
   <Firebeater.description>A polearm with a flat leather flap used for beating down fires.</Firebeater.description>
   <Firebeater.tools.0.label>shaft</Firebeater.tools.0.label>
   <Firebeater.tools.1.label>point</Firebeater.tools.1.label>
-
-
 </LanguageData>
