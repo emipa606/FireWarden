@@ -2,26 +2,26 @@
 <LanguageData>
   <FWrd.Name>Fire Warden (by Pelador)</FWrd.Name>
   <!-- Equipping -->
-  <FWrd.EquippingDone>Fire Wardens will attempt to equip fire fighting tools if they do not have one</FWrd.EquippingDone>
-  <FWrd.ReturnToStock>Return equipped fire fighting tools to colony stock</FWrd.ReturnToStock>
-  <FWrd.ReturnToSpot>In all cases returned equipment goes to the defined return spot (Returning needs to be set)</FWrd.ReturnToSpot>
-  <FWrd.SearchRange>Radius of cells a Fire Warden searches for fire fighting equipment: (25 - 75)</FWrd.SearchRange>
-  <FWrd.SearchRangeTip>Default value is [50], note only valid if equipping is set.</FWrd.SearchRangeTip>
-  <FWrd.ShowEqWarnMsgs>Show warning messages for lack of relevant equipment (when not equipping)</FWrd.ShowEqWarnMsgs>
-  <FWrd.ReplacePct>Percentage foam level to replace Fire Extinguisher: [Default 25]:</FWrd.ReplacePct>
-  <FWrd.SendReplaceMsgs>Show replacement messages when Fire Extinguishers run out of foam:</FWrd.SendReplaceMsgs>
+  <FWrd.EquippingDone>Les agents de sécurité incendie tenteront d'équiper des outils de lutte contre l'incendie s'ils n'en ont pas</FWrd.EquippingDone>
+  <FWrd.ReturnToStock>Remettre les outils de lutte contre l'incendie équipés dans le stock de la colonie</FWrd.ReturnToStock>
+  <FWrd.ReturnToSpot>Dans tous les cas, l'équipement retourné va au point de retour défini (le retour doit être défini)</FWrd.ReturnToSpot>
+  <FWrd.SearchRange>Rayon des cases dans laquelle un agents de sécurité incendie recherche du matériel de lutte contre les incendies: (25 - 75)</FWrd.SearchRange>
+  <FWrd.SearchRangeTip>La valeur par défaut est [50], note valable uniquement si l'équipement est défini.</FWrd.SearchRangeTip>
+  <FWrd.ShowEqWarnMsgs>Afficher les messages d'avertissement en cas de manque d'équipement approprié (lorsque vous n'équipez pas)</FWrd.ShowEqWarnMsgs>
+  <FWrd.ReplacePct>Pourcentage de niveau de mousse pour remplacer l'extincteur: [Par défaut 25]:</FWrd.ReplacePct>
+  <FWrd.SendReplaceMsgs>Afficher les messages de remplacement lorsque les extincteurs sont à court de mousse:</FWrd.SendReplaceMsgs>
   <!-- Poly Handling -->
-  <FWrd.HandleAnyway>Fire Wardens (with an extinguisher) respond even if a fire is being handled by a FW (with an extinguisher)</FWrd.HandleAnyway>
-  <FWrd.HandledRange>Radius around a "responder" (Fire Warden with extinguisher) a fire is considered handled: (1 - 15)</FWrd.HandledRange>
-  <FWrd.HandledRangeTip>Default value is [5], note irrelevant if FWs respond even if considered handled. (A "responder" is recognised as having an extinguisher).</FWrd.HandledRangeTip>
+  <FWrd.HandleAnyway>Les agents de sécurité incendie (avec un extincteur) répondent même si un incendie est traité par un SSIAP (avec un extincteur)</FWrd.HandleAnyway>
+  <FWrd.HandledRange>Rayon autour d'un "répondeur" (SSIAP avec extincteur) où un feu est considéré comme traité: (1 - 15)</FWrd.HandledRange>
+  <FWrd.HandledRangeTip>La valeur par défaut est [5], notez sans importance si les micrologiciels répondent même s'ils sont considérés comme traités. (Un "répondeur" est reconnu comme ayant un extincteur).</FWrd.HandledRangeTip>
   <!-- Bravery -->
-  <FWrd.TooBrave>Fire Wardens neglet their safety (perform acts of bravery)</FWrd.TooBrave>
-  <FWrd.TooBraveTip>Warning!: Fire Wardens will prioritise their alloted fire to extinguish, temporarily ignoring other potential fires en-route.</FWrd.TooBraveTip>
-  <FWrd.HowClose>Percentage of Extinguisher range to attempt to tackle fires: (50 - 100):</FWrd.HowClose>
-  <FWrd.HowCloseTip>Default value is [80]</FWrd.HowCloseTip>
+  <FWrd.TooBrave>Les agents de sécurité incendie négligent leur sécurité (accomplissent des actes de bravoure)</FWrd.TooBrave>
+  <FWrd.TooBraveTip>Attention!: Les agents de sécurité incendie donneront la priorité à leur feu alloué pour s'éteindre, ignorant temporairement les autres incendies potentiels en cours de route.</FWrd.TooBraveTip>
+  <FWrd.HowClose>Pourcentage de la portée de l'extincteur pour tenter de lutter contre les incendies: (50 - 100):</FWrd.HowClose>
+  <FWrd.HowCloseTip>La valeur par défaut est[80]</FWrd.HowCloseTip>
   <!-- Exclusions -->
-  <FWrd.BrawlerNotOK>Exclude Brawlers from using Fire Extinguishers (Avoids use of ranged)</FWrd.BrawlerNotOK>
+  <FWrd.BrawlerNotOK>Exclure les bagarreurs de l'utilisation des extincteurs (évite l'utilisation des extincteurs à distance)</FWrd.BrawlerNotOK>
   <!--  Code body -->
   <!--  Message -->
-  <FWrd.FEReplaced>{0}'s {1} has been replaced.</FWrd.FEReplaced>
+  <FWrd.FEReplaced>Le {1} de {0} a été remplacé.</FWrd.FEReplaced>
 </LanguageData>

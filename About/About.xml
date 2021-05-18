@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <name>Fire Warden (Continued)</name>
   <packageId>Mlie.FireWarden</packageId>
@@ -29,18 +29,22 @@
   <incompatibleWith>
     <li>weaponstorage.kv.rw</li>
   </incompatibleWith>
-  <description>Update of peladors mod
+  <description>[img]https://i.imgur.com/WAEzk68.png[/img]
+Update of peladors mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=2002295141
 
-[img]https://i.imgur.com/wtwHAQu.png[/img]
+- Pawns incapable of violence can now use the extinguisher
 
-Support-chat:
-https://invite.gg/mlie
+[img]https://i.imgur.com/7Gzt3Rg.png[/img]
 
-Non-steam version:
-https://github.com/emipa606/FireWarden
+[table]
+	[tr]
+		[td][url=https://invite.gg/Mlie][img]https://i.imgur.com/zdzzBrc.png[/img][/url][/td]
+		[td][url=https://github.com/emipa606/FireWarden][img]https://i.imgur.com/kTkpTOE.png[/img][/url][/td]
+	[/tr]
+[/table]
 	
---- Original Description ---
+[img]https://i.imgur.com/NOW7jU1.png[/img]
 Overview
 
 "Colonist AI fire fighting with fire extinguisher". (Optional Expansion mod).
@@ -85,14 +89,6 @@ Firebeater
 
 Included is a melee tool that can be researched from the neolithic period. This allows FWs to use tools as part of their duties and will perform slightly more effectively in tackling fires when beating. Note this can not be applied "manually" as a fire fighting tool and only gains a bonus during the FW AI process. This due to the inability to target fires with it, but also since the beating process has some hard-coded elements. It is made with minimal amounts of wood, steel and leather at a crafting spot or smithy.
 
-
-Mod Notes
-
-If applying this mod to a game mid-save, you will first have to remove "all" occurrences of the existing fire extinguisher item (including equipped). This is so that new items can be used that utilise the custom properties needed for the FW duties. (New games starting with the mod will be fine of course).
-
-Removal of the mod mid-game I would expect a number of error messages on the subsequent load that should subside with future loads and not effect gameplay further.
-
-Mod Compatibility (relevant)
 *** Subject to conversion ***
 
 Tested with:
@@ -125,7 +121,5 @@ Thanks go to Mehni for helping debug and test some ideas.
 [*] For best support, please use the Discord-channel for error-reporting.
 [*] Do not report errors by making a discussion-thread, I get no notification of that.
 [*] If you have the solution for a problem, please post it to the GitHub repository.
-[/list]
-</description>
+[/list]</description>
 </ModMetaData>
-

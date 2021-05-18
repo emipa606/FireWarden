@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- Work defined activities -->
+  <PelFireWarden.label>Agent de sécurité incendie</PelFireWarden.label>
+  <PelFireWarden.description>Éteindre les incendies dans la colonie à l'aide de matériel de lutte contre les incendies</PelFireWarden.description>
+  <PelFireWarden.labelShort>Agent de sécurité incendie</PelFireWarden.labelShort>
+  <PelFireWarden.pawnLabel>Agent de sécurité incendie</PelFireWarden.pawnLabel>
+  <PelFireWarden.gerundLabel>combat les incendies</PelFireWarden.gerundLabel>
+  <PelFireWarden.verb>combattre les incendies</PelFireWarden.verb>
+</LanguageData>

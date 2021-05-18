@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- Work defined activities -->
+  <PelFESimple.reportString>SSIAP: lutte contre l'incendie avec équipement: TargetA.</PelFESimple.reportString>
+  <!-- Thought based activities -->
+  <FWEquipping.reportString>SSIAP: Equipe TargetA.</FWEquipping.reportString>
+  <FWSwapping.reportString>SSIA: échange TargetA.</FWSwapping.reportString>
+  <FEReplace.reportString>remplacement de l'extincteur.</FEReplace.reportString>
+  <!-- FWSwapReturn Currently turned off in C# code due to conflict with simple sidearms -->
+  <FWSwapReturn.reportString>SSIAP: attribution TargetA.</FWSwapReturn.reportString>
+  <!-- FWNoSwap Currently not used, handled in C# code instead -->
+  <FWNoSwap.reportString>SSIAP: vérification de l'inventaire</FWNoSwap.reportString>
+</LanguageData>
