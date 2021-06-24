@@ -1,5 +1,8 @@
 # Changelog for FireWarden
 
+1.0.4.0 - Updated chinese translation by 虛無_鬼王
+
+
 1.0.3.0 - Added french translation, thanks qux!
 
 

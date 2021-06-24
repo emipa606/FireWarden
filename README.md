@@ -6,6 +6,7 @@ Update of peladors mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=2002295141
 
 - Pawns incapable of violence can now use the extinguisher
+- Added french translation, thanks qux!
 
 ![Image](https://i.imgur.com/7Gzt3Rg.png)
 

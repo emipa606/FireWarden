@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PelFESimple.reportString>消防员:用设备进行灭火:目标A。</PelFESimple.reportString>
+  <FWEquipping.reportString>消防员:装备目标A。</FWEquipping.reportString>
+  <FWSwapping.reportString>消防员:替换目标A。</FWSwapping.reportString>
+  <FEReplace.reportString>更换灭火器。</FEReplace.reportString>
+  <FWSwapReturn.reportString>消防员:派发给目标A。</FWSwapReturn.reportString>
+  <FWNoSwap.reportString>消防员:检查库存</FWNoSwap.reportString>
+</LanguageData>

@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <PelFWLacksFE>Fire Warden Lacks Tool</PelFWLacksFE>
-  <PelFWLacksFEDesc>Fire Warden has no "Fire Extinguisher" equipped or in their inventory</PelFWLacksFEDesc>
-  <PelFWLacksFB>Fire Warden Lacks Tool</PelFWLacksFB>
-  <PelFWLacksFBDesc>Fire Warden has no "Firebeater" equipped or in their inventory</PelFWLacksFBDesc>
-  <PelFWIsPyro>Fire Warden is a pyromaniac</PelFWIsPyro>
-  <PelFWIsPyroDesc>Colonist will not perform Fire Warden duties</PelFWIsPyroDesc>
-  <PelFWIsBrawler>Fire Warden is an excluded brawler</PelFWIsBrawler>
-  <PelFWIsBrawlerDesc>Colonist will not perform Fire Warden duties with a fire extinguisher</PelFWIsBrawlerDesc>
-  <PelFWNeedSpot>Missing Fire Warden FE Return Spot</PelFWNeedSpot>
-  <PelFWNeedSpotDesc>Need to place down a Fire Warden return spot (Misc Buildings)</PelFWNeedSpotDesc>
-  <PelFWSpotAlready>Fire Warden Return Spot already defined, removing previous entry</PelFWSpotAlready>
+  <PelFWLacksFE>消防员缺乏工具</PelFWLacksFE>
+  <PelFWLacksFEDesc>库存中没有"灭火器"，或消防员没有装备"灭火器"</PelFWLacksFEDesc>
+  <PelFWLacksFB>消防员缺乏工具</PelFWLacksFB>
+  <PelFWLacksFBDesc>没有库存或消防员没有装备"灭火器"。</PelFWLacksFBDesc>
+  <PelFWIsPyro>消防员是个纵火狂</PelFWIsPyro>
+  <PelFWIsPyroDesc>殖民者将不履行消防员的职责</PelFWIsPyroDesc>
+  <PelFWIsBrawler>消防员是个无法参与争斗的棋子</PelFWIsBrawler>
+  <PelFWIsBrawlerDesc>殖民者不会用灭火器履行消防员的职责</PelFWIsBrawlerDesc>
+  <PelFWNeedSpot>消防员FE返回点丢失</PelFWNeedSpot>
+  <PelFWNeedSpotDesc>需要放置一个消防员返回点(杂项建筑)。</PelFWNeedSpotDesc>
+  <PelFWSpotAlready>已经定义了消防员返回点，删除上一条信息</PelFWSpotAlready>
 </LanguageData>

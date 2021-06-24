@@ -2,26 +2,26 @@
 <LanguageData>
   <FWrd.Name>Fire Warden (by Pelador)</FWrd.Name>
   <!-- Equipping -->
-  <FWrd.EquippingDone>Fire Wardens will attempt to equip fire fighting tools if they do not have one</FWrd.EquippingDone>
-  <FWrd.ReturnToStock>Return equipped fire fighting tools to colony stock</FWrd.ReturnToStock>
-  <FWrd.ReturnToSpot>In all cases returned equipment goes to the defined return spot (Returning needs to be set)</FWrd.ReturnToSpot>
-  <FWrd.SearchRange>Radius of cells a Fire Warden searches for fire fighting equipment: (25 - 75)</FWrd.SearchRange>
-  <FWrd.SearchRangeTip>Default value is [50], note only valid if equipping is set.</FWrd.SearchRangeTip>
-  <FWrd.ShowEqWarnMsgs>Show warning messages for lack of relevant equipment (when not equipping)</FWrd.ShowEqWarnMsgs>
-  <FWrd.ReplacePct>Percentage foam level to replace Fire Extinguisher: [Default 25]:</FWrd.ReplacePct>
-  <FWrd.SendReplaceMsgs>Show replacement messages when Fire Extinguishers run out of foam:</FWrd.SendReplaceMsgs>
+  <FWrd.EquippingDone>如果沒有滅火工具，消防員將嘗試配備滅火工具。</FWrd.EquippingDone>
+  <FWrd.ReturnToStock>將配備好的消防工具送回殖民地庫存</FWrd.ReturnToStock>
+  <FWrd.ReturnToSpot>在所有情況下，返回的設備都會被送到定義的返回點（返回需要被設置）。</FWrd.ReturnToSpot>
+  <FWrd.SearchRange>消防員尋找消防設備的小區半徑。(25-75)</FWrd.SearchRange>
+  <FWrd.SearchRangeTip>默認值為[50]，注意只有在設置了裝備的情況下才有效。</FWrd.SearchRangeTip>
+  <FWrd.ShowEqWarnMsgs>顯示缺乏相關設備的警告信息（未裝備時）。</FWrd.ShowEqWarnMsgs>
+  <FWrd.ReplacePct>泡沫剩餘%更換滅火器，[默認為25]:</FWrd.ReplacePct>
+  <FWrd.SendReplaceMsgs>當滅火器的泡沫用完時，顯示替換信息:</FWrd.SendReplaceMsgs>
   <!-- Poly Handling -->
-  <FWrd.HandleAnyway>Fire Wardens (with an extinguisher) respond even if a fire is being handled by a FW (with an extinguisher)</FWrd.HandleAnyway>
-  <FWrd.HandledRange>Radius around a "responder" (Fire Warden with extinguisher) a fire is considered handled: (1 - 15)</FWrd.HandledRange>
-  <FWrd.HandledRangeTip>Default value is [5], note irrelevant if FWs respond even if considered handled. (A "responder" is recognised as having an extinguisher).</FWrd.HandledRangeTip>
+  <FWrd.HandleAnyway>即使消防員（帶著滅火器）正在處理工作，消防員也會做出反應。</FWrd.HandleAnyway>
+  <FWrd.HandledRange>在(“前往者”攜帶滅火器的消防員)周圍的半徑內的火災將被認為是得到了處理。(1 - 15)</FWrd.HandledRange>
+  <FWrd.HandledRangeTip>默認值為[5]，注意無關勾選即使被認為已處理，消防員也會前往。(“前往者”攜帶滅火器的消防員)。</FWrd.HandledRangeTip>
   <!-- Bravery -->
-  <FWrd.TooBrave>Fire Wardens neglet their safety (perform acts of bravery)</FWrd.TooBrave>
-  <FWrd.TooBraveTip>Warning!: Fire Wardens will prioritise their alloted fire to extinguish, temporarily ignoring other potential fires en-route.</FWrd.TooBraveTip>
-  <FWrd.HowClose>Percentage of Extinguisher range to attempt to tackle fires: (50 - 100):</FWrd.HowClose>
-  <FWrd.HowCloseTip>Default value is [80]</FWrd.HowCloseTip>
+  <FWrd.TooBrave>消防員忽視了自己的安全(進行勇敢的行動)。</FWrd.TooBrave>
+  <FWrd.TooBraveTip>警告！消防員將優先撲滅他們所分配的火災，暫時不考慮途中的其他潛在火災。</FWrd.TooBraveTip>
+  <FWrd.HowClose>在滅火器範圍內%處理火災(50-100):</FWrd.HowClose>
+  <FWrd.HowCloseTip>默認值為[80]</FWrd.HowCloseTip>
   <!-- Exclusions -->
-  <FWrd.BrawlerNotOK>Exclude Brawlers from using Fire Extinguishers (Avoids use of ranged)</FWrd.BrawlerNotOK>
+  <FWrd.BrawlerNotOK>無法參與爭鬥的棋子不使用滅火器(避免使用範圍性的)。</FWrd.BrawlerNotOK>
   <!--  Code body -->
   <!--  Message -->
-  <FWrd.FEReplaced>{0}'s {1} has been replaced.</FWrd.FEReplaced>
+  <FWrd.FEReplaced>{0}的{1}已被替換。</FWrd.FEReplaced>
 </LanguageData>
