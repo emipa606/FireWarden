@@ -37,7 +37,7 @@ namespace PelFireWarden
         }
 
         // Token: 0x06000010 RID: 16 RVA: 0x0000269C File Offset: 0x0000089C
-        public override GizmoResult GizmoOnGUI(Vector2 topLeft, float maxWidth)
+        public override GizmoResult GizmoOnGUI(Vector2 topLeft, float maxWidth, GizmoRenderParms parms)
         {
             var overRect = new Rect(topLeft.x, topLeft.y, GetWidth(maxWidth), 75f);
             Widgets.DrawWindowBackground(overRect);

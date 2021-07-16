@@ -20,18 +20,18 @@ namespace PelFireWarden
         // Token: 0x06000009 RID: 9 RVA: 0x0000251C File Offset: 0x0000071C
         public static Thing GetFE(Pawn pawn)
         {
-            bool flag;
+            bool hasEquipment;
             if (pawn == null)
             {
-                flag = false;
+                hasEquipment = false;
             }
             else
             {
                 var equipment = pawn.equipment;
-                flag = equipment?.Primary != null;
+                hasEquipment = equipment?.Primary != null;
             }
 
-            if (flag)
+            if (hasEquipment)
             {
                 Thing chkPrim = pawn.equipment.Primary;
                 if (IsFEFoamThing(chkPrim))

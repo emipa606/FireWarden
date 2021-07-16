@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality">
+    <defName>Firebeater</defName>
+    <label>Firebeater</label>
+    <description>A polearm with a flat leather flap used for beating down fires.</description>
+    <graphicData>
+      <texPath>Things/Item/Firebeater</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Neolithic</techLevel>
+    <weaponTags Inherit="false">
+      <li>Firebeater_NotUsed</li>
+    </weaponTags>
+    <thingClass>PelFireWarden.FireWardenData</thingClass>
+    <comps>
+      <li Class="PelFireWarden.CompProperties_FWData">
+        <FWSwapType>N</FWSwapType>
+        <FWPawnID>0</FWPawnID>
+        <FWPrimDef>N</FWPrimDef>
+      </li>
+    </comps>
+    <statBases>
+      <WorkToMake>7500</WorkToMake>
+      <Mass>2</Mass>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+      <Beauty>-3</Beauty>
+      <SellPriceFactor>0.20</SellPriceFactor>
+    </statBases>
+    <equippedAngleOffset>-25</equippedAngleOffset>
+    <costStuffCount>30</costStuffCount>
+    <stuffCategories>
+      <li>Leathery</li>
+    </stuffCategories>
+    <costList>
+      <Steel>10</Steel>
+      <WoodLog>20</WoodLog>
+    </costList>
+    <recipeMaker>
+      <recipeUsers>
+        <li>CraftingSpot</li>
+      </recipeUsers>
+      <defaultIngredientFilter>
+        <categories>
+          <li>Leathers</li>
+          <li>ResourcesRaw</li>
+        </categories>
+        <disallowedThingDefs>
+          <li>Silver</li>
+          <li>Gold</li>
+        </disallowedThingDefs>
+      </defaultIngredientFilter>
+      <skillRequirements>
+        <Crafting>3</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>FireBeater</researchPrerequisite>
+    </recipeMaker>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tools>
+      <li>
+        <label>shaft</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>5</power>
+        <cooldownTime>2.6</cooldownTime>
+      </li>
+      <li>
+        <label>point</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>4</power>
+        <cooldownTime>2.2</cooldownTime>
+      </li>
+    </tools>
+  </ThingDef>
+</Defs>

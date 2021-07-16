@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{007C5201-2D9C-4FBF-AC48-54603ADCE854}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PelFireWarden</RootNamespace>
+    <AssemblyName>PelFireWarden</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\1.2\Assemblies</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\1.2\Assemblies</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony">
+      <Version>2.0.4</Version>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+    <PackageReference Include="Krafs.Rimworld.Ref">
+      <Version>1.2.2900</Version>
+      <ExcludeAssets>runtime</ExcludeAssets>
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Alert_FireWardenIsPyro.cs" />
+    <Compile Include="Alert_FireWardenLacksFB.cs" />
+    <Compile Include="Alert_FireWardenLacksFE.cs" />
+    <Compile Include="CompFWData.cs" />
+    <Compile Include="CompProperties_FWData.cs" />
+    <Compile Include="Controller.cs" />
+    <Compile Include="FECompCorrection.cs" />
+    <Compile Include="FireWardenData.cs" />
+    <Compile Include="FWEquipJobs.cs" />
+    <Compile Include="FWFoamUtility.cs" />
+    <Compile Include="FWResearch.cs" />
+    <Compile Include="FWSwapJobs.cs" />
+    <Compile Include="FWWorkTypeDef.cs" />
+    <Compile Include="Gizmo_FEFoamStatus.cs" />
+    <Compile Include="HarmonyPatching.cs" />
+    <Compile Include="JobDriver_FEReplace.cs" />
+    <Compile Include="JobDriver_FWEquipping.cs" />
+    <Compile Include="JobDriver_FWNoSwap.cs" />
+    <Compile Include="JobDriver_FWSwapping.cs" />
+    <Compile Include="JobDriver_FWSwapReturn.cs" />
+    <Compile Include="JobDriver_PelFESimple.cs" />
+    <Compile Include="JobGiver_equipnewFW.cs" />
+    <Compile Include="JobGiver_FEAutoReplace.cs" />
+    <Compile Include="JobGiver_FWEquipFW.cs" />
+    <Compile Include="JobGiver_FWSwapback.cs" />
+    <Compile Include="JobGiver_SwapBackFW.cs" />
+    <Compile Include="Pawn_DraftController_GetGizmos_PatchFW.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="ThinkNode_ConditionalFWPawnHasClarity.cs" />
+    <Compile Include="TryCastShotFW.cs" />
+    <Compile Include="WorkGiver_PelFWFightFires.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
