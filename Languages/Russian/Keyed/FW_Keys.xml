@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <PelFWLacksFE>Fire Warden Lacks Tool</PelFWLacksFE>
-  <PelFWLacksFEDesc>Fire Warden has no "Fire Extinguisher" equipped or in their inventory</PelFWLacksFEDesc>
-  <PelFWLacksFB>Fire Warden Lacks Tool</PelFWLacksFB>
-  <PelFWLacksFBDesc>Fire Warden has no "Firebeater" equipped or in their inventory</PelFWLacksFBDesc>
-  <PelFWIsPyro>Fire Warden is a pyromaniac</PelFWIsPyro>
-  <PelFWIsPyroDesc>Colonist will not perform Fire Warden duties</PelFWIsPyroDesc>
-  <PelFWIsBrawler>Fire Warden is an excluded brawler</PelFWIsBrawler>
-  <PelFWIsBrawlerDesc>Colonist will not perform Fire Warden duties with a fire extinguisher</PelFWIsBrawlerDesc>
-  <PelFWNeedSpot>Missing Fire Warden FE Return Spot</PelFWNeedSpot>
-  <PelFWNeedSpotDesc>Need to place down a Fire Warden return spot (Misc Buildings)</PelFWNeedSpotDesc>
-  <PelFWSpotAlready>Fire Warden Return Spot already defined, removing previous entry</PelFWSpotAlready>
+  <PelFWLacksFE>У Стража огня нет огнетушителя</PelFWLacksFE>
+  <PelFWLacksFEDesc>У Стража огня нет «Огнетушителя» в инвентаре.</PelFWLacksFEDesc>
+  <PelFWLacksFB>У стража огня нет огнетушителя</PelFWLacksFB>
+  <PelFWLacksFBDesc>У Стражей огня нет экипированных или находящихся в инвентаре «Огнетушителя».</PelFWLacksFBDesc>
+  <PelFWIsPyro>Страж огня - пироманьяк</PelFWIsPyro>
+  <PelFWIsPyroDesc>Колонист не будет выполнять обязанности стража огня</PelFWIsPyroDesc>
+  <PelFWIsBrawler>Страж огня — исключенный боец</PelFWIsBrawler>
+  <PelFWIsBrawlerDesc>Колонист не будет выполнять обязанности стража огня с огнетушителем.</PelFWIsBrawlerDesc>
+  <PelFWNeedSpot>Место возвращения пропавшего пожарного надзирателя FE</PelFWNeedSpot>
+  <PelFWNeedSpotDesc>Необходимо разместить точку возврата Стража огня (Разное Здания)</PelFWNeedSpotDesc>
+  <PelFWSpotAlready>Место возврата Стража огня уже определено, предыдущая запись удалена.</PelFWSpotAlready>
 </LanguageData>
