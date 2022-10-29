@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <FWrd.Name>Fire Warden (by Pelador)</FWrd.Name>
+  <FWrd.CurrentModVersion>Installed mod-version: {0}</FWrd.CurrentModVersion>
   <!-- Equipping -->
   <FWrd.EquippingDone>Fire Wardens will attempt to equip fire fighting tools if they do not have one</FWrd.EquippingDone>
   <FWrd.ReturnToStock>Return equipped fire fighting tools to colony stock</FWrd.ReturnToStock>

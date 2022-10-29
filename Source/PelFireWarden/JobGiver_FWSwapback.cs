@@ -1,69 +1,60 @@
-﻿using RimWorld;
+using RimWorld;
 using Verse;
 using Verse.AI;
 
-namespace PelFireWarden
+namespace PelFireWarden;
+
+public class JobGiver_FWSwapback : ThinkNode_JobGiver
 {
-    // Token: 0x0200001D RID: 29
-    public class JobGiver_FWSwapback : ThinkNode_JobGiver
+    private static readonly JobGiver_SwapBackFW swapBack = new JobGiver_SwapBackFW();
+
+    private static readonly string FEDefName = "Gun_Fire_Ext";
+
+    private static readonly string FBDefName = "Firebeater";
+
+    protected override Job TryGiveJob(Pawn pawn)
     {
-        // Token: 0x04000038 RID: 56
-        private static readonly JobGiver_SwapBackFW swapBack = new();
-
-        // Token: 0x04000039 RID: 57
-        private static readonly string FEDefName = "Gun_Fire_Ext";
-
-        // Token: 0x0400003A RID: 58
-        private static readonly string FBDefName = "Firebeater";
-
-        // Token: 0x06000070 RID: 112 RVA: 0x00004AC0 File Offset: 0x00002CC0
-        protected override Job TryGiveJob(Pawn pawn)
+        var thinkResult = swapBack.TryIssueJobPackage(pawn, default);
+        Job result;
+        if (thinkResult.IsValid)
         {
-            var thinkResult = swapBack.TryIssueJobPackage(pawn, default);
-            Job result;
-            if (thinkResult.IsValid)
+            result = thinkResult.Job;
+        }
+        else
+        {
+            if (!pawn.inventory.innerContainer.NullOrEmpty())
             {
-                result = thinkResult.Job;
-            }
-            else
-            {
-                if (!pawn.inventory.innerContainer.NullOrEmpty())
+                foreach (var invFECheck in pawn.inventory.innerContainer)
                 {
-                    foreach (var invFECheck in pawn.inventory.innerContainer)
+                    if ((invFECheck.def.defName == FEDefName || invFECheck.def.defName == FBDefName) &&
+                        (invFECheck as FireWardenData)?.FWSwapType != "N")
                     {
-                        if ((invFECheck.def.defName == FEDefName || invFECheck.def.defName == FBDefName) &&
-                            (invFECheck as FireWardenData)?.FWSwapType != "N")
-                        {
-                            FEResetVars((ThingWithComps) invFECheck);
-                        }
+                        FEResetVars((ThingWithComps)invFECheck);
                     }
                 }
-
-                result = null;
             }
 
-            return result;
+            result = null;
         }
 
-        // Token: 0x06000071 RID: 113 RVA: 0x00004BAC File Offset: 0x00002DAC
-        private void FEResetVars(ThingWithComps thingWC)
+        return result;
+    }
+
+    private void FEResetVars(ThingWithComps thingWC)
+    {
+        if (thingWC == null || thingWC.def.defName != FEDefName && thingWC.def.defName != FBDefName)
         {
-            if (thingWC == null || thingWC.def.defName != FEDefName && thingWC.def.defName != FBDefName)
-            {
-                return;
-            }
-
-            ((FireWardenData) thingWC).FWSwapType = "N";
-            ((FireWardenData) thingWC).FWPawnID = 0;
-            ((FireWardenData) thingWC).FWPrimDef = "N";
+            return;
         }
 
-        // Token: 0x0200003D RID: 61
-        [DefOf]
-        public static class FWSwapJobs
-        {
-            // Token: 0x040000A7 RID: 167
-            public static JobDef FWNoSwap;
-        }
+        ((FireWardenData)thingWC).FWSwapType = "N";
+        ((FireWardenData)thingWC).FWPawnID = 0;
+        ((FireWardenData)thingWC).FWPrimDef = "N";
+    }
+
+    [DefOf]
+    public static class FWSwapJobs
+    {
+        public static JobDef FWNoSwap;
     }
 }

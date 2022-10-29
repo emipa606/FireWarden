@@ -8,6 +8,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=2002295141
 - Pawns incapable of violence can now use the extinguisher
 - Added french translation, thanks qux!
 - Updated chinese translation, thanks 虛無_鬼王!
+- Updated russian translation, thanks Kotobike!
 
 ![Image](https://i.imgur.com/pufA0kM.png)
 
@@ -35,8 +36,6 @@ Swapping Weapons
 An FW will attempt to equip a FE or FB into their inventory. They will then swap to it automatically in response to a fire. Once all the threats from fires have been removed and there is no other pressing emergency or needs for the FW, and after they have completed any outstanding duties prior to a Fire they will then equip back any weapon or tool that was held in the primary slot at the time of the swap. Thus allowing a ready state with weapons for combat and hunting or reverting to tools that where used as a primary. This allows a continuity with work activities.
 
 You can still manually intervene with the equipment, in which case you will "interrupt" any auto-"swapback" routines, but if changing things manually this is at the discretion of the player. This may be required however in certain examples: for instance a FW who may have been burnt in their duties and needing medical attention would consider this treatment a priority to the swapping process. Thus if they are then needed to be drafted during this recovery period, then a manual override to swap back the weapon would be required. In regular use the FWs will "swapback" given a short time to their previous items, where possible immediately after the fire itself.
-
-I would recommend other mods to help with the use of this mod, especially if intending/wanting to be more hands on. In this case I would recommend "Simple Sidearms" as a mod to use alongside this one. (It has been tested for compatibility). Another useful option might be "Pick up and Haul" (also tested).
 
 Handling
 
