@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- ====== Compatability Patch ==================== -->
+  <!-- FWData -->
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Fire Extinguisher (Continued)</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <success>Always</success>
+      <operations>
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Gun_Fire_Ext"]/thingClass</xpath>
+          <match Class="PatchOperationReplace">
+            <xpath>/Defs/ThingDef[defName="Gun_Fire_Ext"]/thingClass</xpath>
+            <value>
+              <thingClass>PelFireWarden.FireWardenData</thingClass>
+            </value>
+          </match>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Gun_Fire_Ext"]</xpath>
+            <value>
+              <thingClass>PelFireWarden.FireWardenData</thingClass>
+            </value>
+          </nomatch>
+        </li>
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Gun_Fire_Ext"]/comps</xpath>
+          <match Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Gun_Fire_Ext"]/comps</xpath>
+            <value>
+              <li Class="PelFireWarden.CompProperties_FWData">
+                <FWSwapType>N</FWSwapType>
+                <FWPawnID>0</FWPawnID>
+                <FWPrimDef>N</FWPrimDef>
+                <FEFoamUses>100</FEFoamUses>
+              </li>
+            </value>
+          </match>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Gun_Fire_Ext"]</xpath>
+            <value>
+              <comps>
+                <li Class="PelFireWarden.CompProperties_FWData">
+                  <FWSwapType>N</FWSwapType>
+                  <FWPawnID>0</FWPawnID>
+                  <FWPrimDef>N</FWPrimDef>
+                  <FEFoamUses>100</FEFoamUses>
+                </li>
+              </comps>
+            </value>
+          </nomatch>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+  <Operation Class="PatchOperationAdd" MayRequire="Ludeon.RimWorld.Biotech">
+    <xpath>Defs/ThingDef[defName="Human"]/race/lifeStageWorkSettings</xpath>
+    <value>
+      <PelFireWarden>7</PelFireWarden>
+    </value>
+  </Operation>
+</Patch>

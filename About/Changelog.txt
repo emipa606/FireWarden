@@ -1,5 +1,8 @@
 # Changelog for FireWarden
 
+1.4.2 - Children should no longer do firewarden jobs, thanks NotFood!
+
+
 1.4.1 - Mod updated for 1.4 and passed autotests.
 Used DeepL to update translations for ChineseSimplified, French, German, Russian
 
