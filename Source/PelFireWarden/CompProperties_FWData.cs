@@ -4,13 +4,13 @@ namespace PelFireWarden;
 
 public class CompProperties_FWData : CompProperties
 {
-    public int FEFoamUses = 100;
+    public readonly int FEFoamUses = 100;
+
+    public readonly string FWPrimDef = "N";
+
+    public readonly string FWSwapType = "N";
 
     public int FWPawnID;
-
-    public string FWPrimDef = "N";
-
-    public string FWSwapType = "N";
 
     public CompProperties_FWData()
     {

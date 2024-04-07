@@ -36,12 +36,7 @@ public class JobGiver_FEAutoReplace : ThinkNode_JobGiver
         }
 
         FindBestReplace(pawn, FE.def, out var targ);
-        if (targ != null)
-        {
-            return new Job(jobdef, targ, FE);
-        }
-
-        return null;
+        return targ != null ? new Job(jobdef, targ, FE) : null;
     }
 
     private void FindBestReplace(Pawn FW, ThingDef FEItem, out Thing targ)
@@ -63,7 +58,7 @@ public class JobGiver_FEAutoReplace : ThinkNode_JobGiver
         var bestpoints = 0f;
         foreach (var targchk in listFE)
         {
-            if (targchk.IsForbidden(FW) || targchk?.Faction != null && !targchk.Faction.IsPlayer ||
+            if (targchk.IsForbidden(FW) || targchk?.Faction is { IsPlayer: false } ||
                 !FW.CanReserveAndReach(targchk, PathEndMode.ClosestTouch, Danger.None) ||
                 !FWFoamUtility.IsFEFoamThing(targchk) || FWFoamUtility.ReplaceFEFoam(targchk))
             {

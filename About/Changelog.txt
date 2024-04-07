@@ -1,5 +1,8 @@
 # Changelog for FireWarden
 
+1.5.0 - Updated for 1.5
+
+
 1.4.2 - Children should no longer do firewarden jobs, thanks NotFood!
 
 

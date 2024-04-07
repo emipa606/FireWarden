@@ -39,7 +39,7 @@ internal class WorkGiver_PelFWFightFires : WorkGiver_Scanner
 
             if ((pawn2.Faction == pawn.Faction || pawn2.HostFaction == pawn.Faction ||
                  pawn2.HostFaction == pawn.HostFaction) && !pawn.Map.areaManager.Home[fire.Position] &&
-                IntVec3Utility.ManhattanDistanceFlat(pawn.Position, pawn2.Position) > 15)
+                IntVec3Utility.ManhattanDistanceFlat(pawn.Position, pawn2.Position) > NearbyPawnRadius)
             {
                 return false;
             }

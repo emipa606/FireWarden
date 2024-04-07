@@ -10,16 +10,7 @@ public class JobGiver_FWEquipFW : ThinkNode_JobGiver
     protected override Job TryGiveJob(Pawn pawn)
     {
         var thinkResult = equipFW.TryIssueJobPackage(pawn, default);
-        Job result;
-        if (thinkResult.IsValid)
-        {
-            result = thinkResult.Job;
-        }
-        else
-        {
-            result = null;
-        }
 
-        return result;
+        return thinkResult.IsValid ? thinkResult.Job : null;
     }
 }
