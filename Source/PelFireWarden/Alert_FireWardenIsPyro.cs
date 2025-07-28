@@ -35,7 +35,7 @@ public class Alert_FireWardenIsPyro : Alert
     }
 
     [DefOf]
-    public static class FWWorkTypeDef
+    private static class FWWorkTypeDef
     {
         public static WorkTypeDef PelFireWarden;
     }

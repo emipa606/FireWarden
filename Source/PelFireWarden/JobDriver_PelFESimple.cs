@@ -38,8 +38,6 @@ public class JobDriver_PelFESimple : JobDriver
                     return true;
                 }
             }
-
-            return false;
         }
 
         return false;
@@ -64,8 +62,6 @@ public class JobDriver_PelFESimple : JobDriver
                     return true;
                 }
             }
-
-            return false;
         }
 
         return false;

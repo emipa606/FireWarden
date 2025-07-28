@@ -113,21 +113,7 @@ internal class WorkGiver_PelFWFightFires : WorkGiver_Scanner
                 {
                     return false;
                 }
-
-                if (FWHasFE(pawn) && pawn.workSettings.WorkIsActive(FWWorkTypeDef.PelFireWarden))
-                {
-                    return pawn.Position.InHorDistOf(f.Position, (float)Controller.Settings.HandledRange);
-                }
-
-                return pawn.Position.InHorDistOf(f.Position, 5f);
             }
-
-            if (FWHasFE(pawn) && pawn.workSettings.WorkIsActive(FWWorkTypeDef.PelFireWarden))
-            {
-                return pawn.Position.InHorDistOf(f.Position, (float)Controller.Settings.HandledRange);
-            }
-
-            return pawn.Position.InHorDistOf(f.Position, 5f);
         }
 
         if (FWHasFE(pawn) && pawn.workSettings.WorkIsActive(FWWorkTypeDef.PelFireWarden))
@@ -163,7 +149,7 @@ internal class WorkGiver_PelFWFightFires : WorkGiver_Scanner
     }
 
     [DefOf]
-    public static class FWWorkTypeDef
+    private static class FWWorkTypeDef
     {
         public static WorkTypeDef PelFireWarden;
     }

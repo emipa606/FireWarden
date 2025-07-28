@@ -42,8 +42,6 @@ public class JobDriver_FWEquipping : JobDriver
                     return true;
                 }
             }
-
-            return false;
         }
 
         return false;
@@ -68,8 +66,6 @@ public class JobDriver_FWEquipping : JobDriver
                     return true;
                 }
             }
-
-            return false;
         }
 
         return false;

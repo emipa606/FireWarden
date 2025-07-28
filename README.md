@@ -1,4 +1,4 @@
-# FireWarden
+# [Fire Warden (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=2197425463)
 
 ![Image](https://i.imgur.com/buuPQel.png)
 
@@ -11,13 +11,8 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=2002295141
 - Updated russian translation, thanks Kotobike!
 
 ![Image](https://i.imgur.com/pufA0kM.png)
-
 	
 ![Image](https://i.imgur.com/Z4GOv8H.png)
-
-Overview
-
-"Colonist AI fire fighting with fire extinguisher". (Optional Expansion mod).
 
 Details
 
@@ -57,23 +52,6 @@ Firebeater
 
 Included is a melee tool that can be researched from the neolithic period. This allows FWs to use tools as part of their duties and will perform slightly more effectively in tackling fires when beating. Note this can not be applied "manually" as a fire fighting tool and only gains a bonus during the FW AI process. This due to the inability to target fires with it, but also since the beating process has some hard-coded elements. It is made with minimal amounts of wood, steel and leather at a crafting spot or smithy.
 
-*** Subject to conversion ***
-
-Tested with:
-
-Combat Extended (See required harmony fix below)
-Fluffie's Work Tab,
-Job Splitter,
-Simple Sidearms (Currently: issue with FE being recognised as desirable in combat, awaiting fix, see temp fix below),
-Pick up and haul.
-
-CE Foam Use fix
-
-Incompatibility
-
-[KV] Weapon Storage
-
-
 Credits
 
 Thanks go to Mehni for helping debug and test some ideas.
@@ -87,13 +65,12 @@ Thanks go to Mehni for helping debug and test some ideas.
 
 -  See if the the error persists if you just have this mod and its requirements active.
 -  If not, try adding your other mods until it happens again.
--  Post your error-log using https://steamcommunity.com/workshop/filedetails/?id=818773962]HugsLib or the standalone https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404]Uploader and command Ctrl+F12
+-  Post your error-log using the [Log Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) or the standalone [Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) and command Ctrl+F12
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
--  Use https://github.com/RimSort/RimSort/releases/latest]RimSort to sort your mods
+-  Use [RimSort](https://github.com/RimSort/RimSort/releases/latest) to sort your mods
 
+ 
 
-
-https://steamcommunity.com/sharedfiles/filedetails/changelog/2197425463]![Image](https://img.shields.io/github/v/release/emipa606/FireWarden?label=latest%20version&style=plastic&color=9f1111&labelColor=black)
-
+[![Image](https://img.shields.io/github/v/release/emipa606/FireWarden?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2197425463) | tags:  emergency,  firefighting

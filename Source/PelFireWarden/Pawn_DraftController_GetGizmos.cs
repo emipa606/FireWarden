@@ -7,7 +7,7 @@ using Verse;
 namespace PelFireWarden;
 
 [HarmonyPatch(typeof(Pawn_DraftController), "GetGizmos")]
-public class Pawn_DraftController_GetGizmos_PatchFW
+public class Pawn_DraftController_GetGizmos
 {
     public static void Postfix(ref IEnumerable<Gizmo> __result, ref Pawn_DraftController __instance)
     {

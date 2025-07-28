@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: Firebeater -->
+  <Firebeater.label>Firebeater</Firebeater.label>
+  <!-- EN: A polearm with a flat leather flap used for beating down fires. -->
+  <Firebeater.description>A polearm with a flat leather flap used for beating down fires.</Firebeater.description>
+  <!-- EN: shaft -->
+  <Firebeater.tools.shaft.label>shaft</Firebeater.tools.shaft.label>
+  <!-- EN: point -->
+  <Firebeater.tools.point.label>point</Firebeater.tools.point.label>
+</LanguageData>

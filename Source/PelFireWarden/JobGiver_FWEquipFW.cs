@@ -5,7 +5,7 @@ namespace PelFireWarden;
 
 public class JobGiver_FWEquipFW : ThinkNode_JobGiver
 {
-    private static readonly JobGiver_equipnewFW equipFW = new JobGiver_equipnewFW();
+    private static readonly JobGiver_equipnewFW equipFW = new();
 
     protected override Job TryGiveJob(Pawn pawn)
     {

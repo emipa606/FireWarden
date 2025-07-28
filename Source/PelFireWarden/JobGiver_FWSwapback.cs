@@ -6,7 +6,7 @@ namespace PelFireWarden;
 
 public class JobGiver_FWSwapback : ThinkNode_JobGiver
 {
-    private static readonly JobGiver_SwapBackFW swapBack = new JobGiver_SwapBackFW();
+    private static readonly JobGiver_SwapBackFW swapBack = new();
 
     private static readonly string FEDefName = "Gun_Fire_Ext";
 

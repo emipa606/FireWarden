@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: replacing fire extinguisher. -->
+  <FEReplace.reportString>replacing fire extinguisher.</FEReplace.reportString>
+  <!-- EN: FW: Equipping TargetA. -->
+  <FWEquipping.reportString>FW: Equipping TargetA.</FWEquipping.reportString>
+  <!-- EN: FW: Checking Inventory -->
+  <FWNoSwap.reportString>FW: Checking Inventory</FWNoSwap.reportString>
+  <!-- EN: FW: swapping TargetA. -->
+  <FWSwapping.reportString>FW: swapping TargetA.</FWSwapping.reportString>
+  <!-- EN: FW: allocating TargetA. -->
+  <FWSwapReturn.reportString>FW: allocating TargetA.</FWSwapReturn.reportString>
+  <!-- EN: FW: fire fighting with equipment: TargetA. -->
+  <PelFESimple.reportString>FW: fire fighting with equipment: TargetA.</PelFESimple.reportString>
+</LanguageData>

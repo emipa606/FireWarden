@@ -18,7 +18,7 @@ public class Settings : ModSettings
 
     public float ReplacePct = 25f;
 
-    public bool RestockingDone;
+    private bool RestockingDone;
 
     public bool ReturnToSpot;
 

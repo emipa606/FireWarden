@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: Extinguish fires in the colony using firefighting equipment -->
+  <PelFireWarden.description>Extinguish fires in the colony using firefighting equipment</PelFireWarden.description>
+  <!-- EN: firefighting -->
+  <PelFireWarden.gerundLabel>firefighting</PelFireWarden.gerundLabel>
+  <!-- EN: Fire Warden -->
+  <PelFireWarden.labelShort>Fire Warden</PelFireWarden.labelShort>
+  <!-- EN: Fire Warden -->
+  <PelFireWarden.pawnLabel>Fire Warden</PelFireWarden.pawnLabel>
+  <!-- EN: Extinguish -->
+  <PelFireWarden.verb>Extinguish</PelFireWarden.verb>
+</LanguageData>

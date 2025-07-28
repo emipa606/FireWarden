@@ -85,13 +85,13 @@ public class Alert_FireWardenLacksFB : Alert
     }
 
     [DefOf]
-    public static class FWWorkTypeDef
+    private static class FWWorkTypeDef
     {
         public static WorkTypeDef PelFireWarden;
     }
 
     [DefOf]
-    public static class FWResearch
+    private static class FWResearch
     {
         public static ResearchProjectDef FireBeater;
 

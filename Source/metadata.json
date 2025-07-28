@@ -2,5 +2,17 @@
   "Continued": true,
   "CanAdd": "0",
   "CanRemove": "2",
-  "PreviewVersion": "1.5"
+  "PreviewVersion": "1.6",
+  "Patches": true,
+  "Defs": true,
+  "Assemblies": true,
+  "LinesOfCode": 92684,
+  "LinesOfXML": 9450,
+  "CodeBaseSize": 79,
+  "LastXmlCleaning": "2025-07-28T20:19:46.4522689+02:00",
+  "SocialImageSet": true,
+  "SearchTags": [
+    " emergency",
+    " firefighting"
+  ]
 }
