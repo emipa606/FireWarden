@@ -7,11 +7,12 @@ namespace PelFireWarden;
 
 public class JobDriver_PelFESimple : JobDriver
 {
-    private static readonly string FEDefName = "Gun_Fire_Ext";
+    private const string ExtinguisherDefName = "Gun_Fire_Ext";
+    private const string FireBeaterDefName = "Firebeater";
 
-    private static readonly string FBDefName = "Firebeater";
-
-    private static readonly bool DebugFWData = false;
+    private const bool DebugFwData = false;
+    private ThingWithComps extinguisherCached;
+    private bool fwTriedCastOnce;
 
     private Fire TargetFire => (Fire)job.targetA.Thing;
 
@@ -20,44 +21,50 @@ public class JobDriver_PelFESimple : JobDriver
         return true;
     }
 
-    private static bool FWHasFE(Pawn p)
+    private static ThingWithComps findExtinguisher(Pawn p)
     {
-        if (p.equipment.Primary != null)
+        if (p.equipment.Primary != null &&
+            p.equipment.Primary.def.defName == ExtinguisherDefName &&
+            FWFoamUtility.HasFEFoam(p.equipment.Primary))
         {
-            if (p.equipment.Primary.def.defName == FEDefName && FWFoamUtility.HasFEFoam(p.equipment.Primary))
-            {
-                return true;
-            }
+            return p.equipment.Primary;
         }
-        else if (!p.inventory.innerContainer.NullOrEmpty())
+
+        if (p.inventory.innerContainer.NullOrEmpty())
         {
-            foreach (var invFECheck in p.inventory.innerContainer)
+            return null;
+        }
+
+        foreach (var item in p.inventory.innerContainer)
+        {
+            if (item.def.defName == ExtinguisherDefName && FWFoamUtility.HasFEFoam(item))
             {
-                if (invFECheck.def.defName == FEDefName && FWFoamUtility.HasFEFoam(invFECheck))
-                {
-                    return true;
-                }
+                return (ThingWithComps)item;
             }
         }
 
-        return false;
+        return null;
     }
 
-    private static bool FWHasFB(Pawn p)
+    private static bool fwHasFe(Pawn p)
+    {
+        return findExtinguisher(p) != null;
+    }
+
+    private static bool fwHasFb(Pawn p)
     {
         if (p.equipment.Primary != null)
         {
-            if (p.equipment.Primary.def.defName == FBDefName)
+            if (p.equipment.Primary.def.defName == FireBeaterDefName)
             {
                 return true;
             }
         }
         else if (!p.inventory.innerContainer.NullOrEmpty())
         {
-            using var enumerator = p.inventory.innerContainer.GetEnumerator();
-            while (enumerator.MoveNext())
+            foreach (var item in p.inventory.innerContainer)
             {
-                if (enumerator.Current?.def.defName == FBDefName)
+                if (item?.def.defName == FireBeaterDefName)
                 {
                     return true;
                 }
@@ -69,366 +76,310 @@ public class JobDriver_PelFESimple : JobDriver
 
     protected override IEnumerable<Toil> MakeNewToils()
     {
+        fwTriedCastOnce = false;
+
         this.FailOnDespawnedOrNull(TargetIndex.A);
-        var toilInv = new Toil();
+
+        var toil = new Toil();
         var toilEquipGoto = new Toil();
         var toilEquip = new Toil();
-        var toilGoto = new Toil();
-        var toilCast = new Toil();
         var toilTouch = new Toil();
         var toilBeat = new Toil();
         var toilBash = new Toil();
-        var HasPrimFE = false;
-        var HasPrimFB = false;
+
+        var hasExtinguisher = false;
+        var hasFireBeater = false;
         if (pawn.equipment.Primary != null)
         {
-            if (pawn.equipment.Primary.def.defName == FEDefName && FWFoamUtility.HasFEFoam(pawn.equipment.Primary))
+            switch (pawn.equipment.Primary.def.defName)
             {
-                HasPrimFE = true;
-            }
-            else if (pawn.equipment.Primary.def.defName == FBDefName)
-            {
-                HasPrimFB = true;
+                case ExtinguisherDefName when FWFoamUtility.HasFEFoam(pawn.equipment.Primary):
+                    hasExtinguisher = true;
+                    break;
+                case FireBeaterDefName:
+                    hasFireBeater = true;
+                    break;
             }
         }
 
-        if (!HasPrimFE)
+        if (!hasExtinguisher)
         {
-            var fb = HasPrimFB;
-            toilInv.initAction = delegate
+            var fireBeater = hasFireBeater;
+            toil.initAction = delegate
             {
-                var Swap = false;
-                ThingWithComps invGearToEquip2 = null;
-                ThingWithComps primToSwap2 = null;
-                Thing RemoveThing = null;
-                Thing BackupThing2 = null;
+                var hasPrimaryWeapon = false;
+                ThingWithComps inventoryItemWithComps = null;
+                ThingWithComps primaryWeapon = null;
+                Thing item = null;
+                Thing fireBeaterItem = null;
                 if (pawn.equipment.Primary != null)
                 {
-                    primToSwap2 = pawn.equipment.Primary;
+                    primaryWeapon = pawn.equipment.Primary;
                 }
 
-                foreach (var invThing2 in pawn.inventory.innerContainer)
+                foreach (var inventoryItem in pawn.inventory.innerContainer)
                 {
-                    if (invThing2.def.defName != FEDefName || !FWFoamUtility.HasFEFoam(invThing2))
+                    if (inventoryItem.def.defName == ExtinguisherDefName && FWFoamUtility.HasFEFoam(inventoryItem))
                     {
-                        if (invThing2.def.defName == FBDefName)
+                        item = inventoryItem;
+                        inventoryItemWithComps = (ThingWithComps)inventoryItem;
+                        if (primaryWeapon != null)
                         {
-                            BackupThing2 = invThing2;
-                        }
-                    }
-                    else
-                    {
-                        RemoveThing = invThing2;
-                        invGearToEquip2 = (ThingWithComps)invThing2;
-                        if (primToSwap2 != null)
-                        {
-                            Swap = true;
+                            hasPrimaryWeapon = true;
                         }
 
                         break;
                     }
-                }
 
-                if (invGearToEquip2 == null && !fb && BackupThing2 != null)
-                {
-                    RemoveThing = BackupThing2;
-                    invGearToEquip2 = (ThingWithComps)BackupThing2;
-                    if (primToSwap2 != null)
+                    if (inventoryItem.def.defName == FireBeaterDefName)
                     {
-                        Swap = true;
+                        fireBeaterItem = inventoryItem;
                     }
                 }
 
-                if (invGearToEquip2 == null)
+                if (inventoryItemWithComps == null && !fireBeater && fireBeaterItem != null)
+                {
+                    item = fireBeaterItem;
+                    inventoryItemWithComps = (ThingWithComps)fireBeaterItem;
+                    if (primaryWeapon != null)
+                    {
+                        hasPrimaryWeapon = true;
+                    }
+                }
+
+                if (inventoryItemWithComps == null)
                 {
                     return;
                 }
 
-                var primDef = "";
-                if (Swap)
+                var fWPrimDef = "";
+                if (hasPrimaryWeapon)
                 {
-                    primDef = pawn.equipment.Primary.def.defName;
+                    fWPrimDef = pawn.equipment.Primary.def.defName;
                     pawn.equipment.Remove(pawn.equipment.Primary);
                 }
 
-                pawn.inventory.innerContainer.Remove(RemoveThing);
-                pawn.equipment.MakeRoomFor(invGearToEquip2);
-                pawn.equipment.AddEquipment(invGearToEquip2);
-                if (Swap)
+                pawn.inventory.innerContainer.Remove(item);
+                pawn.equipment.MakeRoomFor(inventoryItemWithComps);
+                pawn.equipment.AddEquipment(inventoryItemWithComps);
+                switch (hasPrimaryWeapon)
                 {
-                    pawn.inventory.innerContainer.TryAdd(primToSwap2);
+                    case true:
+                        pawn.inventory.innerContainer.TryAdd(primaryWeapon);
+                        break;
+                    case false:
+                        return;
                 }
 
-                if (!Swap)
-                {
-                    return;
-                }
-
-                var returnType = "SI";
-                if (pawn.equipment.Primary.def.defName != FEDefName &&
-                    pawn.equipment.Primary.def.defName != FBDefName)
+                const string fWSwapType = "SI";
+                if (pawn.equipment.Primary.def.defName != ExtinguisherDefName &&
+                    pawn.equipment.Primary.def.defName != FireBeaterDefName)
                 {
                     return;
                 }
 
                 var primary = pawn.equipment.Primary;
-                ((FireWardenData)primary).FWSwapType = returnType;
+                ((FireWardenData)primary).FWSwapType = fWSwapType;
                 ((FireWardenData)primary).FWPawnID = pawn.thingIDNumber;
-                ((FireWardenData)primary).FWPrimDef = primDef;
-                if (!DebugFWData)
-                {
-                    return;
-                }
-
-                var Test = pawn.equipment.Primary;
-                var debugTest = $"{pawn.Label} : ";
-                debugTest = $"{debugTest}{Test.Label} : ";
-                debugTest = $"{debugTest}{pawn.equipment.Primary.GetType()} : ";
-                if (((FireWardenData)Test).FWSwapType != null)
-                {
-                    debugTest = $"{debugTest}{((FireWardenData)Test).FWSwapType} : ";
-                }
-                else
-                {
-                    debugTest += "null : ";
-                }
-
-                debugTest = $"{debugTest}{((FireWardenData)Test).FWPawnID} : ";
-                if (((FireWardenData)Test).FWPrimDef != null)
-                {
-                    debugTest += ((FireWardenData)Test).FWPrimDef;
-                }
-                else
-                {
-                    debugTest += "null";
-                }
-
-                Messages.Message(debugTest, pawn, MessageTypeDefOf.NeutralEvent, false);
+                ((FireWardenData)primary).FWPrimDef = fWPrimDef;
             };
-            toilInv.defaultCompleteMode = ToilCompleteMode.FinishedBusy;
-            yield return toilInv;
+            toil.defaultCompleteMode = ToilCompleteMode.FinishedBusy;
+            yield return toil;
         }
 
-        var FWEquipping = Controller.Settings.EquippingDone;
-        var FWSearchRange = (float)Controller.Settings.SearchRange;
-        if (FWSearchRange < 25f)
+        var equippingDone = Controller.Settings.EquippingDone;
+        var num = (float)Controller.Settings.SearchRange;
+        if (num < 25f)
         {
-            FWSearchRange = 25f;
+            num = 25f;
         }
 
-        if (FWSearchRange > 75f)
+        if (num > 75f)
         {
-            FWSearchRange = 75f;
+            num = 75f;
         }
 
-        HasPrimFE = false;
-        HasPrimFB = false;
+        hasExtinguisher = false;
+        hasFireBeater = false;
         if (pawn.equipment.Primary != null)
         {
-            if (pawn.equipment.Primary.def.defName == FEDefName && FWFoamUtility.HasFEFoam(pawn.equipment.Primary))
+            switch (pawn.equipment.Primary.def.defName)
             {
-                HasPrimFE = true;
-            }
-            else if (pawn.equipment.Primary.def.defName == FBDefName)
-            {
-                HasPrimFB = true;
+                case ExtinguisherDefName when FWFoamUtility.HasFEFoam(pawn.equipment.Primary):
+                    hasExtinguisher = true;
+                    break;
+                case FireBeaterDefName:
+                    hasFireBeater = true;
+                    break;
             }
         }
 
-        if (!HasPrimFE && !HasPrimFB && FWEquipping)
+        if (!hasExtinguisher && !hasFireBeater && equippingDone)
         {
-            ThingWithComps invGearToEquip = null;
-            ThingWithComps primToSwap = null;
-            Thing BackupThing = null;
+            ThingWithComps thingWithComps = null;
+            ThingWithComps thingWithComps2 = null;
+            Thing thing = null;
             if (pawn.equipment.Primary != null)
             {
-                primToSwap = pawn.equipment.Primary;
+                thingWithComps2 = pawn.equipment.Primary;
             }
 
-            foreach (var invThing in pawn.inventory.innerContainer)
+            foreach (var item3 in pawn.inventory.innerContainer)
             {
-                if (invThing.def.defName == FEDefName && FWFoamUtility.HasFEFoam(invThing))
+                if (item3.def.defName == ExtinguisherDefName && FWFoamUtility.HasFEFoam(item3))
                 {
-                    invGearToEquip = (ThingWithComps)invThing;
-                    if (primToSwap != null)
+                    thingWithComps = (ThingWithComps)item3;
+                    if (thingWithComps2 == null)
                     {
                     }
 
                     break;
                 }
 
-                if (invThing.def.defName == FBDefName)
+                if (item3.def.defName == FireBeaterDefName)
                 {
-                    BackupThing = invThing;
+                    thing = item3;
                 }
             }
 
-            if (invGearToEquip == null && BackupThing != null)
+            if (thingWithComps == null && thing != null)
             {
-                invGearToEquip = (ThingWithComps)BackupThing;
+                thingWithComps = (ThingWithComps)thing;
             }
 
-            if (invGearToEquip == null)
+            if (thingWithComps == null)
             {
-                Thing ThingToGrab = null;
-                var skip = Controller.Settings.BrawlerNotOK && pawn.story.traits.HasTrait(TraitDefOf.Brawler);
+                Thing thingToGrab = null;
+                var isBrawler = Controller.Settings.BrawlerNotOK && pawn.story.traits.HasTrait(TraitDefOf.Brawler);
                 var traverseParams = TraverseParms.For(pawn);
-
-                bool validatorFE(Thing t)
+                if (!isBrawler)
                 {
-                    return !t.IsForbidden(pawn) && pawn.CanReserve(t) && FWFoamUtility.HasFEFoam(t) &&
-                           !FWFoamUtility.ReplaceFEFoam(t);
-                }
-
-                bool validatorFB(Thing t)
-                {
-                    return !t.IsForbidden(pawn) && pawn.CanReserve(t);
-                }
-
-                if (!skip)
-                {
-                    var FElist = pawn.Map.listerThings.ThingsOfDef(DefDatabase<ThingDef>.GetNamed(FEDefName));
-                    var FEGrab = GenClosest.ClosestThing_Global_Reachable(pawn.Position, pawn.Map, FElist,
-                        PathEndMode.OnCell, traverseParams, FWSearchRange, validatorFE);
-                    if (FEGrab != null)
+                    var searchSet =
+                        pawn.Map.listerThings.ThingsOfDef(DefDatabase<ThingDef>.GetNamed(ExtinguisherDefName));
+                    var closestExtinguisher = GenClosest.ClosestThing_Global_Reachable(pawn.Position, pawn.Map,
+                        searchSet,
+                        PathEndMode.OnCell, traverseParams, num, validatorFireExtinguisher);
+                    if (closestExtinguisher != null)
                     {
-                        ThingToGrab = FEGrab;
+                        thingToGrab = closestExtinguisher;
                     }
                     else
                     {
-                        var FBlist = pawn.Map.listerThings.ThingsOfDef(DefDatabase<ThingDef>.GetNamed(FBDefName));
-                        var FBGrab = GenClosest.ClosestThing_Global_Reachable(pawn.Position, pawn.Map, FBlist,
-                            PathEndMode.OnCell, traverseParams, FWSearchRange, validatorFB);
-                        if (FBGrab != null)
+                        var searchSet2 =
+                            pawn.Map.listerThings.ThingsOfDef(DefDatabase<ThingDef>.GetNamed(FireBeaterDefName));
+                        var closestFireBeater = GenClosest.ClosestThing_Global_Reachable(pawn.Position, pawn.Map,
+                            searchSet2,
+                            PathEndMode.OnCell, traverseParams, num, validatorFireBeater);
+                        if (closestFireBeater != null)
                         {
-                            ThingToGrab = FBGrab;
+                            thingToGrab = closestFireBeater;
                         }
                     }
                 }
                 else
                 {
-                    var FBlist2 = pawn.Map.listerThings.ThingsOfDef(DefDatabase<ThingDef>.GetNamed(FBDefName));
-                    var FBGrab2 = GenClosest.ClosestThing_Global_Reachable(pawn.Position, pawn.Map, FBlist2,
-                        PathEndMode.OnCell, traverseParams, FWSearchRange, validatorFB);
-                    if (FBGrab2 != null)
+                    var searchSet3 =
+                        pawn.Map.listerThings.ThingsOfDef(DefDatabase<ThingDef>.GetNamed(FireBeaterDefName));
+                    var closestFireBeaterThing = GenClosest.ClosestThing_Global_Reachable(pawn.Position, pawn.Map,
+                        searchSet3,
+                        PathEndMode.OnCell, traverseParams, num, validatorFireBeater);
+                    if (closestFireBeaterThing != null)
                     {
-                        ThingToGrab = FBGrab2;
+                        thingToGrab = closestFireBeaterThing;
                     }
                 }
 
-                if (ThingToGrab != null)
+                if (thingToGrab != null)
                 {
                     toilEquipGoto.initAction = delegate
                     {
-                        if (Map.reservationManager.CanReserve(pawn, ThingToGrab))
+                        if (Map.reservationManager.CanReserve(pawn, thingToGrab))
                         {
-                            pawn.Reserve(ThingToGrab, job);
+                            pawn.Reserve(thingToGrab, job);
                         }
 
-                        pawn.pather.StartPath(ThingToGrab, PathEndMode.OnCell);
+                        pawn.pather.StartPath(thingToGrab, PathEndMode.OnCell);
                     };
-                    toilEquipGoto.FailOn(ThingToGrab.DestroyedOrNull);
-                    toilEquipGoto.AddFailCondition(() => FWHasFE(pawn) && ThingToGrab.def.defName == FEDefName);
-                    toilEquipGoto.AddFailCondition(() => FWHasFB(pawn) && ThingToGrab.def.defName == FBDefName);
+                    toilEquipGoto.FailOn(thingToGrab.DestroyedOrNull);
+                    toilEquipGoto.AddFailCondition(() =>
+                        fwHasFe(pawn) && thingToGrab.def.defName == ExtinguisherDefName);
+                    toilEquipGoto.AddFailCondition(() => fwHasFb(pawn) && thingToGrab.def.defName == FireBeaterDefName);
                     toilEquipGoto.defaultCompleteMode = ToilCompleteMode.PatherArrival;
                     yield return toilEquipGoto;
                     toilEquip.initAction = delegate
                     {
-                        var primDeEquip = pawn.equipment.Primary;
-                        var primDef = "N";
-                        if (primDeEquip != null)
-                        {
-                            primDef = pawn.equipment.Primary.def.defName;
-                            pawn.equipment.Remove(pawn.equipment.Primary);
-                            pawn.inventory.innerContainer.TryAdd(primDeEquip);
-                        }
-
-                        var FWGrabWithComps = (ThingWithComps)ThingToGrab;
-                        ThingWithComps FWGrabbed;
-                        if (FWGrabWithComps.def.stackLimit > 1 && FWGrabWithComps.stackCount > 1)
-                        {
-                            FWGrabbed = (ThingWithComps)FWGrabWithComps.SplitOff(1);
-                        }
-                        else
-                        {
-                            FWGrabbed = FWGrabWithComps;
-                            FWGrabbed.DeSpawn();
-                        }
-
-                        pawn.equipment.MakeRoomFor(FWGrabbed);
-                        pawn.equipment.AddEquipment(FWGrabbed);
-                        var returnType = "EN";
-                        if (pawn.equipment.Primary.def.defName != FEDefName &&
-                            pawn.equipment.Primary.def.defName != FBDefName)
-                        {
-                            return;
-                        }
-
                         var primary = pawn.equipment.Primary;
-                        ((FireWardenData)primary).FWSwapType = returnType;
-                        ((FireWardenData)primary).FWPawnID = pawn.thingIDNumber;
-                        ((FireWardenData)primary).FWPrimDef = primDef;
-                        if (!DebugFWData)
+                        var fWPrimDef = "N";
+                        if (primary != null)
+                        {
+                            fWPrimDef = pawn.equipment.Primary.def.defName;
+                            pawn.equipment.Remove(pawn.equipment.Primary);
+                            pawn.inventory.innerContainer.TryAdd(primary);
+                        }
+
+                        var thingWithComps3 = (ThingWithComps)thingToGrab;
+                        ThingWithComps thingWithComps4;
+                        if (thingWithComps3.def.stackLimit > 1 && thingWithComps3.stackCount > 1)
+                        {
+                            thingWithComps4 = (ThingWithComps)thingWithComps3.SplitOff(1);
+                        }
+                        else
+                        {
+                            thingWithComps4 = thingWithComps3;
+                            thingWithComps4.DeSpawn();
+                        }
+
+                        pawn.equipment.MakeRoomFor(thingWithComps4);
+                        pawn.equipment.AddEquipment(thingWithComps4);
+                        const string fWSwapType = "EN";
+                        if (pawn.equipment.Primary.def.defName != ExtinguisherDefName &&
+                            pawn.equipment.Primary.def.defName != FireBeaterDefName)
                         {
                             return;
                         }
 
-                        var Test = pawn.equipment.Primary;
-                        var debugTest = $"{pawn.Label} : ";
-                        debugTest = $"{debugTest}{Test.Label} : ";
-                        debugTest = $"{debugTest}{pawn.equipment.Primary.GetType()} : ";
-                        if ((Test as FireWardenData)?.FWSwapType != null)
-                        {
-                            debugTest = $"{debugTest}{((FireWardenData)Test).FWSwapType} : ";
-                        }
-                        else
-                        {
-                            debugTest += "null : ";
-                        }
-
-                        debugTest = $"{debugTest}{((FireWardenData)Test).FWPawnID} : ";
-                        if (((FireWardenData)Test).FWPrimDef != null)
-                        {
-                            debugTest += ((FireWardenData)Test).FWPrimDef;
-                        }
-                        else
-                        {
-                            debugTest += "null";
-                        }
-
-                        Messages.Message(debugTest, pawn, MessageTypeDefOf.NeutralEvent, false);
+                        var primary2 = pawn.equipment.Primary;
+                        ((FireWardenData)primary2).FWSwapType = fWSwapType;
+                        ((FireWardenData)primary2).FWPawnID = pawn.thingIDNumber;
+                        ((FireWardenData)primary2).FWPrimDef = fWPrimDef;
                     };
-                    toilEquip.AddFailCondition(() => FWHasFE(pawn) && ThingToGrab.def.defName == FEDefName);
-                    toilEquip.AddFailCondition(() => FWHasFB(pawn) && ThingToGrab.def.defName == FBDefName);
+                    toilEquip.AddFailCondition(() => fwHasFe(pawn) && thingToGrab.def.defName == ExtinguisherDefName);
+                    toilEquip.AddFailCondition(() => fwHasFb(pawn) && thingToGrab.def.defName == FireBeaterDefName);
                     toilEquip.defaultCompleteMode = ToilCompleteMode.FinishedBusy;
                     yield return toilEquip;
                 }
             }
         }
 
-        var HasPrimFEEq = pawn.equipment.Primary != null && pawn.equipment.Primary.def.defName == FEDefName &&
-                          FWFoamUtility.HasFEFoam(pawn.equipment.Primary);
-        if (HasPrimFEEq)
-        {
-            var FEVerbToUse = pawn.TryGetAttackVerb(TargetFire);
-            var RangeFireExt = 10f;
-            if (FEVerbToUse != null)
-            {
-                pawn.jobs.curJob.verbToUse = FEVerbToUse;
-                RangeFireExt = pawn.jobs.curJob.verbToUse.verbProps.range;
-                RangeFireExt *= (float)(Controller.Settings.HowClose / 100.0);
-                if (RangeFireExt < 3f)
-                {
-                    RangeFireExt = 3f;
-                }
+        extinguisherCached = findExtinguisher(pawn);
 
-                if (RangeFireExt > pawn.jobs.curJob.verbToUse.verbProps.range)
-                {
-                    RangeFireExt = pawn.jobs.curJob.verbToUse.verbProps.range;
-                }
+        if (extinguisherCached != null)
+        {
+            var extinguisherVerb = extinguisherCached.GetComp<CompEquippable>()?.PrimaryVerb;
+
+            pawn.jobs.curJob.verbToUse = extinguisherVerb;
+
+
+            this.FailOn(() => pawn.jobs.curJob.verbToUse == null);
+
+            var verbRange = extinguisherVerb?.verbProps.range ?? 10f;
+            var desiredRange = verbRange * (float)(Controller.Settings.HowClose / 100.0);
+
+            if (desiredRange < 3f)
+            {
+                desiredRange = 3f;
             }
 
-            toilGoto.initAction = delegate
+            if (desiredRange > verbRange)
+            {
+                desiredRange = verbRange;
+            }
+
+
+            var toilGotoFe = new Toil();
+            var toilCastFe = new Toil();
+
+            toilGotoFe.initAction = delegate
             {
                 if (Map.reservationManager.CanReserve(pawn, TargetFire))
                 {
@@ -440,101 +391,135 @@ public class JobDriver_PelFESimple : JobDriver
                         caster = pawn,
                         target = TargetFire,
                         verb = pawn.jobs.curJob.verbToUse,
-                        maxRangeFromTarget = RangeFireExt,
+                        maxRangeFromTarget = desiredRange,
                         wantCoverFromTarget = false
                     }, out var dest))
                 {
-                    toilGoto.actor.jobs.EndCurrentJob(JobCondition.Incompletable);
-                    return;
+                    toilGotoFe.actor.pather.StartPath(TargetFire, PathEndMode.Touch);
                 }
-
-                toilGoto.actor.pather.StartPath(dest, PathEndMode.OnCell);
-                pawn.Map.pawnDestinationReservationManager.Reserve(pawn, pawn.jobs.curJob, dest);
+                else
+                {
+                    toilGotoFe.actor.pather.StartPath(dest, PathEndMode.OnCell);
+                    pawn.Map.pawnDestinationReservationManager.Reserve(pawn, pawn.jobs.curJob, dest);
+                }
             };
-            toilGoto.tickAction = delegate
+            toilGotoFe.FailOnDespawnedOrNull(TargetIndex.A);
+            toilGotoFe.defaultCompleteMode = ToilCompleteMode.PatherArrival;
+            toilGotoFe.FailOn(() => pawn.jobs.curJob.verbToUse == null);
+
+            yield return toilGotoFe;
+
+            toilCastFe.initAction = () =>
             {
-                if (Controller.Settings.TooBrave)
+                if (extinguisherCached != null && pawn.equipment.Primary != extinguisherCached)
+                {
+                    if (pawn.inventory?.innerContainer?.Contains(extinguisherCached) == true)
+                    {
+                        pawn.inventory.innerContainer.Remove(extinguisherCached);
+                    }
+
+                    pawn.equipment.MakeRoomFor(extinguisherCached);
+                    pawn.equipment.AddEquipment(extinguisherCached);
+                }
+
+                var verbNow = pawn.equipment?.PrimaryEq?.VerbTracker?.PrimaryVerb;
+
+
+                if (verbNow == null)
                 {
                     return;
                 }
 
-                if (pawn.pather.Moving && pawn.pather.nextCell != TargetFire.Position)
+
+                if (!verbNow.CanHitTarget(TargetFire))
                 {
-                    StartTacklingFireIfAnyAt(pawn.pather.nextCell, toilCast);
+                    if (fwTriedCastOnce)
+                    {
+                        return;
+                    }
+
+                    fwTriedCastOnce = true;
+
+                    pawn.pather.StartPath(TargetFire, PathEndMode.Touch);
+
+                    return;
                 }
 
-                if (pawn.Position != TargetFire.Position)
-                {
-                    StartTacklingFireIfAnyAt(pawn.Position, toilCast);
-                }
+
+                fwTriedCastOnce = false;
+
+                verbNow.TryStartCastOn(TargetFire);
             };
-            toilGoto.FailOnDespawnedOrNull(TargetIndex.A);
-            toilGoto.defaultCompleteMode = ToilCompleteMode.PatherArrival;
-            toilGoto.atomicWithPrevious = true;
-            yield return toilGoto;
-            toilCast.initAction = delegate
+            toilCastFe.FailOnDespawnedOrNull(TargetIndex.A);
+            toilCastFe.FailOn(() => pawn.jobs.curJob.verbToUse == null);
+            toilCastFe.FailOn(() => pawn.equipment?.PrimaryEq?.VerbTracker?.PrimaryVerb == null);
+            toilCastFe.defaultCompleteMode = ToilCompleteMode.FinishedBusy;
+            yield return toilCastFe;
+            var cleanupFe = new Toil
             {
-                pawn.jobs.curJob.verbToUse.TryStartCastOn(TargetFire);
-                if (!TargetFire.Destroyed)
+                initAction = () =>
                 {
-                    return;
-                }
+                    if (extinguisherCached == null || pawn.equipment.Primary != extinguisherCached)
+                    {
+                        return;
+                    }
 
-                pawn.records.Increment(RecordDefOf.FiresExtinguished);
-                pawn.jobs.EndCurrentJob(JobCondition.Succeeded);
+                    if (pawn.inventory.innerContainer.Contains(extinguisherCached))
+                    {
+                        return;
+                    }
+
+                    pawn.equipment.Remove(extinguisherCached);
+                    pawn.inventory.innerContainer.TryAdd(extinguisherCached);
+                },
+                defaultCompleteMode = ToilCompleteMode.Instant
             };
-            toilCast.FailOnDespawnedOrNull(TargetIndex.A);
-            toilCast.defaultCompleteMode = ToilCompleteMode.FinishedBusy;
-            yield return toilCast;
+            yield return cleanupFe;
+
+            yield break;
         }
-        else
+
+        toilTouch.initAction = delegate
         {
-            toilTouch.initAction = delegate
+            if (Map.reservationManager.CanReserve(pawn, TargetFire))
             {
-                if (Map.reservationManager.CanReserve(pawn, TargetFire))
-                {
-                    pawn.Reserve(TargetFire, job);
-                }
+                pawn.Reserve(TargetFire, job);
+            }
 
-                pawn.pather.StartPath(TargetFire, PathEndMode.Touch);
-            };
-            toilTouch.tickAction = delegate
+            pawn.pather.StartPath(TargetFire, PathEndMode.Touch);
+        };
+        toilTouch.tickAction = delegate
+        {
+            if (Controller.Settings.TooBrave)
             {
-                if (Controller.Settings.TooBrave)
-                {
-                    return;
-                }
+                return;
+            }
 
-                if (pawn.pather.Moving && pawn.pather.nextCell != TargetFire.Position)
-                {
-                    StartTacklingFireIfAnyAt(pawn.pather.nextCell, toilBeat);
-                }
-
-                if (pawn.Position != TargetFire.Position)
-                {
-                    StartTacklingFireIfAnyAt(pawn.Position, toilBeat);
-                }
-            };
-            toilTouch.FailOnDespawnedOrNull(TargetIndex.A);
-            toilTouch.defaultCompleteMode = ToilCompleteMode.PatherArrival;
-            toilTouch.atomicWithPrevious = true;
-            yield return toilTouch;
-            toilBeat.tickAction = delegate
+            if (pawn.pather.Moving && pawn.pather.nextCell != TargetFire.Position)
             {
-                if (!pawn.CanReachImmediate(TargetFire, PathEndMode.Touch))
-                {
-                    JumpToToil(toilTouch);
-                    return;
-                }
+                startTacklingFireIfAnyAt(pawn.pather.nextCell, toilBeat);
+            }
 
-                if (pawn.Position != TargetFire.Position && StartTacklingFireIfAnyAt(pawn.Position, toilBeat))
-                {
-                    return;
-                }
-
+            if (pawn.Position != TargetFire.Position)
+            {
+                startTacklingFireIfAnyAt(pawn.Position, toilBeat);
+            }
+        };
+        toilTouch.FailOnDespawnedOrNull(TargetIndex.A);
+        toilTouch.defaultCompleteMode = ToilCompleteMode.PatherArrival;
+        toilTouch.atomicWithPrevious = true;
+        yield return toilTouch;
+        toilBeat.tickAction = delegate
+        {
+            if (!pawn.CanReachImmediate(TargetFire, PathEndMode.Touch))
+            {
+                JumpToToil(toilTouch);
+            }
+            else if (!(pawn.Position != TargetFire.Position) || !startTacklingFireIfAnyAt(pawn.Position, toilBeat))
+            {
                 if (pawn.equipment.Primary != null)
                 {
-                    if (pawn.equipment.Primary.def.defName == FBDefName)
+                    if (pawn.equipment.Primary.def.defName == FireBeaterDefName)
                     {
                         JumpToToil(toilBash);
                     }
@@ -555,71 +540,94 @@ public class JobDriver_PelFESimple : JobDriver
 
                 pawn.records.Increment(RecordDefOf.FiresExtinguished);
                 pawn.jobs.EndCurrentJob(JobCondition.Succeeded);
-            };
-            toilBeat.FailOnDespawnedOrNull(TargetIndex.A);
-            toilBeat.defaultCompleteMode = ToilCompleteMode.Never;
-            yield return toilBeat;
-            if (pawn.equipment.Primary == null || pawn.equipment.Primary.def.defName != FBDefName)
+            }
+        };
+        toilBeat.FailOnDespawnedOrNull(TargetIndex.A);
+        toilBeat.defaultCompleteMode = ToilCompleteMode.Never;
+        yield return toilBeat;
+        if (pawn.equipment.Primary == null || pawn.equipment.Primary.def.defName != FireBeaterDefName)
+        {
+            yield break;
+        }
+
+        toilBash.initAction = delegate
+        {
+            if (TargetFire != null && Map.reservationManager.CanReserve(pawn, TargetFire))
             {
-                yield break;
+                pawn.Reserve(TargetFire, job);
             }
 
-            toilBash.initAction = delegate
+            pawn.pather.StopDead();
+        };
+        toilBash.handlingFacing = true;
+        toilBash.tickAction = delegate
+        {
+            pawn.rotationTracker.FaceTarget(pawn.CurJob.GetTarget(TargetIndex.A));
+            if (TargetFire != null)
             {
-                if (TargetFire != null && Map.reservationManager.CanReserve(pawn, TargetFire))
-                {
-                    pawn.Reserve(TargetFire, job);
-                }
+                pawn.Drawer.Notify_MeleeAttackOn(TargetFire);
+            }
+        };
+        toilBash.PlaySoundAtStart(SoundDefOf.Interact_BeatFire);
+        toilBash.WithProgressBarToilDelay(TargetIndex.A);
+        toilBash.AddFinishAction(delegate
+        {
+            var targetFire = TargetFire;
+            if (targetFire is { Destroyed: false })
+            {
+                TargetFire.Destroy();
+            }
+        });
+        toilBash.FailOnDespawnedOrNull(TargetIndex.A);
+        toilBash.defaultCompleteMode = ToilCompleteMode.Delay;
+        var num3 = 50;
+        var num4 = pawn.GetStatValue(StatDefOf.WorkSpeedGlobal);
+        if (num4 <= 0f)
+        {
+            num4 = 1f;
+        }
 
-                pawn.pather.StopDead();
-            };
-            toilBash.handlingFacing = true;
-            toilBash.tickAction = delegate
+        num3 = (int)(num3 * (1f / num4));
+        if (num3 < 25)
+        {
+            num3 = 25;
+        }
+
+        if (num3 > 200)
+        {
+            num3 = 200;
+        }
+
+        toilBash.defaultDuration = num3;
+        yield return toilBash;
+
+        var cleanup = new Toil
+        {
+            initAction = () => { },
+            defaultCompleteMode = ToilCompleteMode.Instant
+        };
+        yield return cleanup;
+        yield break;
+
+        bool validatorFireExtinguisher(Thing t)
+        {
+            if (!t.IsForbidden(pawn) && pawn.CanReserve(t) && FWFoamUtility.HasFEFoam(t))
             {
-                pawn.rotationTracker.FaceTarget(pawn.CurJob.GetTarget(TargetIndex.A));
-                if (TargetFire != null)
-                {
-                    pawn.Drawer.Notify_MeleeAttackOn(TargetFire);
-                }
-            };
-            toilBash.PlaySoundAtStart(SoundDefOf.Interact_BeatFire);
-            toilBash.WithProgressBarToilDelay(TargetIndex.A);
-            toilBash.AddFinishAction(delegate
-            {
-                if (TargetFire is { Destroyed: false })
-                {
-                    TargetFire.Destroy();
-                }
-            });
-            toilBash.FailOnDespawnedOrNull(TargetIndex.A);
-            toilBash.defaultCompleteMode = ToilCompleteMode.Delay;
-            var ticks = 50;
-            var WorkSpeed = pawn.GetStatValue(StatDefOf.WorkSpeedGlobal);
-            if (WorkSpeed <= 0f)
-            {
-                WorkSpeed = 1f;
+                return !FWFoamUtility.ReplaceFEFoam(t);
             }
 
-            ticks = (int)(ticks * (1f / WorkSpeed));
-            if (ticks < 25)
-            {
-                ticks = 25;
-            }
+            return false;
+        }
 
-            if (ticks > 200)
-            {
-                ticks = 200;
-            }
-
-            toilBash.defaultDuration = ticks;
-            yield return toilBash;
+        bool validatorFireBeater(Thing t)
+        {
+            return !t.IsForbidden(pawn) && pawn.CanReserve(t);
         }
     }
 
-    private bool StartTacklingFireIfAnyAt(IntVec3 cell, Toil nextToil)
+    private bool startTacklingFireIfAnyAt(IntVec3 cell, Toil nextToil)
     {
-        var thingList = cell.GetThingList(pawn.Map);
-        foreach (var thing in thingList)
+        foreach (var thing in cell.GetThingList(pawn.Map))
         {
             if (thing is not Fire { parent: null } fire)
             {
