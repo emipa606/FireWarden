@@ -51,7 +51,7 @@ public class JobDriver_FWSwapping : JobDriver
         };
     }
 
-    private void FWResetVars(ThingWithComps thingWC)
+    private static void FWResetVars(ThingWithComps thingWC)
     {
         if (thingWC == null || thingWC.def.defName != FEDefName && thingWC.def.defName != FBDefName)
         {

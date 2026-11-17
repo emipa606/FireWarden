@@ -14,17 +14,15 @@ public class Alert_FireWardenIsPyro : Alert
         defaultPriority = AlertPriority.High;
     }
 
-    private IEnumerable<Pawn> FWIsPyro
+    private static IEnumerable<Pawn> FWIsPyro
     {
         get
         {
-            foreach (var p in PawnsFinder.AllMaps_FreeColonistsSpawned)
+            foreach (var p in PawnsFinder.AllMaps_FreeColonistsSpawned.Where(p =>
+                         p.workSettings.WorkIsActive(FWWorkTypeDef.PelFireWarden) &&
+                         p.story.traits.HasTrait(TraitDefOf.Pyromaniac)))
             {
-                if (p.workSettings.WorkIsActive(FWWorkTypeDef.PelFireWarden) &&
-                    p.story.traits.HasTrait(TraitDefOf.Pyromaniac))
-                {
-                    yield return p;
-                }
+                yield return p;
             }
         }
     }

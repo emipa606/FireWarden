@@ -39,7 +39,7 @@ public class JobDriver_FWSwapReturn : JobDriver
 
             var invGearFE = (ThingWithComps)invThing;
             if ((invGearFE as FireWardenData)?.FWSwapType == "ER" &&
-                (invGearFE as FireWardenData).FWPawnID == p.thingIDNumber)
+                (invGearFE as FireWardenData)!.FWPawnID == p.thingIDNumber)
             {
                 return true;
             }
@@ -49,7 +49,7 @@ public class JobDriver_FWSwapReturn : JobDriver
     }
 
 
-    private void FEResetVars(ThingWithComps thingWC)
+    private static void FEResetVars(ThingWithComps thingWC)
     {
         if (thingWC == null || thingWC.def.defName != FEDefName)
         {

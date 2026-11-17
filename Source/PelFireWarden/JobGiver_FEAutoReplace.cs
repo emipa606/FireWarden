@@ -39,7 +39,7 @@ public class JobGiver_FEAutoReplace : ThinkNode_JobGiver
         return targ != null ? new Job(jobdef, targ, FE) : null;
     }
 
-    private void FindBestReplace(Pawn FW, ThingDef FEItem, out Thing targ)
+    private static void FindBestReplace(Pawn FW, ThingDef FEItem, out Thing targ)
     {
         targ = null;
         if (FW?.Map == null)

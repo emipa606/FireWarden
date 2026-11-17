@@ -37,7 +37,7 @@ public class JobDriver_FWNoSwap : JobDriver
         };
     }
 
-    private void FEResetVars(ThingWithComps thingWC)
+    private static void FEResetVars(ThingWithComps thingWC)
     {
         if (thingWC == null || thingWC.def.defName != FEDefName)
         {

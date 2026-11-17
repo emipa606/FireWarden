@@ -4,9 +4,8 @@ using Verse;
 namespace PelFireWarden;
 
 [HarmonyPatch(typeof(Verb_Shoot), "TryCastShot")]
-public class TryCastShotFW
+public static class TryCastShotFW
 {
-    [HarmonyPostfix]
     public static void Postfix(ref bool __result, ref Verb_Shoot __instance)
     {
         if (!__result)
@@ -28,6 +27,6 @@ public class TryCastShotFW
             return;
         }
 
-        (ChkFE as FireWardenData).FEFoamUses = uses;
+        (ChkFE as FireWardenData)?.FEFoamUses = uses;
     }
 }

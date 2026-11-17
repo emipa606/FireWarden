@@ -155,7 +155,7 @@ public class JobDriver_PelFESimple : JobDriver
                 var fWPrimDef = "";
                 if (hasPrimaryWeapon)
                 {
-                    fWPrimDef = pawn.equipment.Primary.def.defName;
+                    fWPrimDef = pawn.equipment.Primary?.def.defName;
                     pawn.equipment.Remove(pawn.equipment.Primary);
                 }
 
@@ -172,8 +172,8 @@ public class JobDriver_PelFESimple : JobDriver
                 }
 
                 const string fWSwapType = "SI";
-                if (pawn.equipment.Primary.def.defName != ExtinguisherDefName &&
-                    pawn.equipment.Primary.def.defName != FireBeaterDefName)
+                if (pawn.equipment.Primary?.def.defName != ExtinguisherDefName &&
+                    pawn.equipment.Primary?.def.defName != FireBeaterDefName)
                 {
                     return;
                 }
@@ -217,21 +217,13 @@ public class JobDriver_PelFESimple : JobDriver
         if (!hasExtinguisher && !hasFireBeater && equippingDone)
         {
             ThingWithComps thingWithComps = null;
-            ThingWithComps thingWithComps2 = null;
             Thing thing = null;
-            if (pawn.equipment.Primary != null)
-            {
-                thingWithComps2 = pawn.equipment.Primary;
-            }
 
             foreach (var item3 in pawn.inventory.innerContainer)
             {
                 if (item3.def.defName == ExtinguisherDefName && FWFoamUtility.HasFEFoam(item3))
                 {
                     thingWithComps = (ThingWithComps)item3;
-                    if (thingWithComps2 == null)
-                    {
-                    }
 
                     break;
                 }
@@ -312,7 +304,7 @@ public class JobDriver_PelFESimple : JobDriver
                         var fWPrimDef = "N";
                         if (primary != null)
                         {
-                            fWPrimDef = pawn.equipment.Primary.def.defName;
+                            fWPrimDef = pawn.equipment.Primary?.def.defName;
                             pawn.equipment.Remove(pawn.equipment.Primary);
                             pawn.inventory.innerContainer.TryAdd(primary);
                         }
@@ -332,8 +324,8 @@ public class JobDriver_PelFESimple : JobDriver
                         pawn.equipment.MakeRoomFor(thingWithComps4);
                         pawn.equipment.AddEquipment(thingWithComps4);
                         const string fWSwapType = "EN";
-                        if (pawn.equipment.Primary.def.defName != ExtinguisherDefName &&
-                            pawn.equipment.Primary.def.defName != FireBeaterDefName)
+                        if (pawn.equipment.Primary?.def.defName != ExtinguisherDefName &&
+                            pawn.equipment.Primary?.def.defName != FireBeaterDefName)
                         {
                             return;
                         }
@@ -515,7 +507,7 @@ public class JobDriver_PelFESimple : JobDriver
             {
                 JumpToToil(toilTouch);
             }
-            else if (!(pawn.Position != TargetFire.Position) || !startTacklingFireIfAnyAt(pawn.Position, toilBeat))
+            else if (pawn.Position == TargetFire.Position || !startTacklingFireIfAnyAt(pawn.Position, toilBeat))
             {
                 if (pawn.equipment.Primary != null)
                 {

@@ -5,7 +5,7 @@ using Verse;
 namespace PelFireWarden;
 
 [StaticConstructorOnStartup]
-public class FECompCorrection
+public static class FECompCorrection
 {
     static FECompCorrection()
     {
@@ -22,15 +22,15 @@ public class FECompCorrection
         var list = DefDatabase<ThingDef>.AllDefsListForReading.Where(qualifier).ToList();
         list.RemoveDuplicates();
         var count = 0;
-        foreach (var def in list)
+        foreach (var comps in list.Select(d => d.comps))
         {
-            if (def.comps == null ||
-                def.comps.Any(c => c.GetType() == compType))
+            if (comps == null ||
+                comps.Any(c => c.GetType() == compType))
             {
                 continue;
             }
 
-            def.comps.Add((CompProperties)Activator.CreateInstance(compType));
+            comps.Add((CompProperties)Activator.CreateInstance(compType));
             count++;
         }
 
@@ -159,11 +159,11 @@ public class FECompCorrection
         try
         {
             var thingComp = (ThingComp)Activator.CreateInstance(typeof(CompFWData));
-            thingComp.parent = TWC;
-            var comp = thingComp.props;
+            thingComp?.parent = TWC;
+            var comp = thingComp?.props;
             if (comp != null)
             {
-                thingComp.Initialize(comp);
+                thingComp?.Initialize(comp);
             }
         }
         catch (Exception arg)

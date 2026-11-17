@@ -16,7 +16,7 @@ public class JobDriver_FWEquipping : JobDriver
         return true;
     }
 
-    private bool IsFW(Pawn p)
+    private static bool IsFW(Pawn p)
     {
         return p.workSettings.WorkIsActive(FWWorkTypeDef.PelFireWarden) &&
                !p.story.traits.HasTrait(TraitDefOf.Pyromaniac);
@@ -123,8 +123,8 @@ public class JobDriver_FWEquipping : JobDriver
             if (FEGrabbed.def.defName == FEDefName || FEGrabbed.def.defName == FBDefName)
             {
                 ((FireWardenData)FEGrabbed).FWSwapType = returnType;
-                (FEGrabbed as FireWardenData).FWPawnID = pawnIDNumber;
-                (FEGrabbed as FireWardenData).FWPrimDef = primDef;
+                (FEGrabbed as FireWardenData)?.FWPawnID = pawnIDNumber;
+                (FEGrabbed as FireWardenData)?.FWPrimDef = primDef;
             }
 
             pawn.inventory.innerContainer.TryAdd(FEGrabbed);

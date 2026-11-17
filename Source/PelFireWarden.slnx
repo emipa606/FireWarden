@@ -6,4 +6,19 @@
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="PelFireWarden/PelFireWarden.csproj" />
+  <Folder Name="/XML/1.7/Defs/">
+    <File Path="../1.7/Defs/Defs_Firebeater.xml" />
+    <File Path="../1.7/Defs/Defs_FireWarden.xml" />
+    <File Path="../1.7/Defs/ResearchProject_Firebeater.xml" />
+  </Folder>
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/1.7/Patches/">
+    <File Path="../1.7/Patches/Patches_FW.xml" />
+  </Folder>
+  <Folder Name="/XML/Languages/English/Keyed/">
+    <File Path="../Languages/English/Keyed/FW_Keys.xml" />
+    <File Path="../Languages/English/Keyed/SettingsData.xml" />
+  </Folder>
 </Solution>

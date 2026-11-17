@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -16,7 +17,7 @@ public class Alert_FireWardenLacksFB : Alert
         defaultPriority = AlertPriority.High;
     }
 
-    private IEnumerable<Pawn> FWNoFB
+    private static IEnumerable<Pawn> FWNoFB
     {
         get
         {
@@ -36,12 +37,14 @@ public class Alert_FireWardenLacksFB : Alert
         }
     }
 
-    private bool HasFB(Pawn FW)
+    private static bool HasFB(Pawn FW)
     {
+        List<Thing>.Enumerator enumerator;
         if (FW.equipment.Primary == null)
         {
             var HasFBcheck = false;
-            using var enumerator = FW.inventory.innerContainer.GetEnumerator();
+            enumerator = FW.inventory.innerContainer.GetEnumerator();
+            using var enumerator1 = enumerator as IDisposable;
             while (enumerator.MoveNext())
             {
                 if (enumerator.Current?.def.defName != FBDefName)
@@ -61,22 +64,20 @@ public class Alert_FireWardenLacksFB : Alert
             return true;
         }
 
+        var HasFBcheck2 = false;
+        enumerator = FW.inventory.innerContainer.GetEnumerator();
+        while (enumerator.MoveNext())
         {
-            var HasFBcheck2 = false;
-            using var enumerator = FW.inventory.innerContainer.GetEnumerator();
-            while (enumerator.MoveNext())
+            if (enumerator.Current?.def.defName != FBDefName)
             {
-                if (enumerator.Current?.def.defName != FBDefName)
-                {
-                    continue;
-                }
-
-                HasFBcheck2 = true;
-                break;
+                continue;
             }
 
-            return HasFBcheck2;
+            HasFBcheck2 = true;
+            break;
         }
+
+        return HasFBcheck2;
     }
 
     public override AlertReport GetReport()

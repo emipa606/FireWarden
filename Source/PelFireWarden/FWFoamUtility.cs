@@ -2,7 +2,7 @@ using Verse;
 
 namespace PelFireWarden;
 
-public class FWFoamUtility
+public static class FWFoamUtility
 {
     public const string FEdefName = "Gun_Fire_Ext";
 
@@ -29,7 +29,7 @@ public class FWFoamUtility
 
         if (hasEquipment)
         {
-            Thing chkPrim = pawn.equipment.Primary;
+            Thing chkPrim = pawn?.equipment.Primary;
             if (IsFEFoamThing(chkPrim))
             {
                 return chkPrim;
@@ -47,20 +47,7 @@ public class FWFoamUtility
         }
 
         var invList = pawn.inventory.innerContainer.InnerListForReading;
-        if (invList.Count <= 0)
-        {
-            return null;
-        }
-
-        foreach (var chkInv in invList)
-        {
-            if (IsFEFoamThing(chkInv))
-            {
-                return chkInv;
-            }
-        }
-
-        return null;
+        return invList.Count <= 0 ? null : invList.FirstOrDefault(IsFEFoamThing);
     }
 
     public static bool IsFEFoamThing(Thing thing)

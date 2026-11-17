@@ -18,7 +18,7 @@ public class JobGiver_equipnewFW : ThinkNode
 
     public ThingWithComps FEToCheck;
 
-    public override ThinkResult TryIssueJobPackage(Pawn pawn, JobIssueParams jobParm)
+    public override ThinkResult TryIssueJobPackage(Pawn pawn, JobIssueParams jobParams)
     {
         ThinkResult result;
         if (!Controller.Settings.EquippingDone)

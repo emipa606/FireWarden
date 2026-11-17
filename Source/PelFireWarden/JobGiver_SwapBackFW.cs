@@ -20,7 +20,7 @@ public class JobGiver_SwapBackFW : ThinkNode
 
     private ThingWithComps FWToCheck;
 
-    public override ThinkResult TryIssueJobPackage(Pawn pawn, JobIssueParams jobParm)
+    public override ThinkResult TryIssueJobPackage(Pawn pawn, JobIssueParams jobParams)
     {
         ThinkResult result;
         var HasPrimFWGear = false;
@@ -73,7 +73,7 @@ public class JobGiver_SwapBackFW : ThinkNode
                 {
                     FWToCheck = pawn.equipment.Primary;
                     FWSwapinfo = (FWToCheck as FireWardenData)?.FWSwapType;
-                    FWPawnId = ((FireWardenData)FWToCheck).FWPawnID;
+                    FWPawnId = ((FireWardenData)FWToCheck)!.FWPawnID;
                     FWPrimDef = (FWToCheck as FireWardenData)?.FWPrimDef;
                     if (pawn.thingIDNumber == FWPawnId)
                     {

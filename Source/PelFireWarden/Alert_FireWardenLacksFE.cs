@@ -16,7 +16,7 @@ public class Alert_FireWardenLacksFE : Alert
         defaultPriority = AlertPriority.High;
     }
 
-    private IEnumerable<Pawn> FWNoFE
+    private static IEnumerable<Pawn> FWNoFE
     {
         get
         {
@@ -35,7 +35,7 @@ public class Alert_FireWardenLacksFE : Alert
         }
     }
 
-    private bool HasFE(Pawn FW)
+    private static bool HasFE(Pawn FW)
     {
         if (FW.equipment.Primary == null)
         {

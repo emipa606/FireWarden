@@ -56,11 +56,6 @@ internal class WorkGiver_PelFWFightFires : WorkGiver_Scanner
                 return false;
             }
 
-            // Since pawns can use the extinguisher if they are incapable of violence now the following is not needed
-            //if (pawn.WorkTagIsDisabled(WorkTags.Violent))
-            //{
-            //	return false;
-            //}
             if (pawn.story.traits.HasTrait(TraitDefOf.Pyromaniac))
             {
                 return false;
@@ -105,15 +100,10 @@ internal class WorkGiver_PelFWFightFires : WorkGiver_Scanner
             return false;
         }
 
-        if (Controller.Settings.HandleAnyway)
+        if (Controller.Settings.HandleAnyway && FW.workSettings.WorkIsActive(FWWorkTypeDef.PelFireWarden) &&
+            FWHasFE(FW))
         {
-            if (FW.workSettings.WorkIsActive(FWWorkTypeDef.PelFireWarden))
-            {
-                if (FWHasFE(FW))
-                {
-                    return false;
-                }
-            }
+            return false;
         }
 
         if (FWHasFE(pawn) && pawn.workSettings.WorkIsActive(FWWorkTypeDef.PelFireWarden))

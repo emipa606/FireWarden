@@ -40,7 +40,7 @@ public class JobGiver_FWSwapback : ThinkNode_JobGiver
         return result;
     }
 
-    private void FEResetVars(ThingWithComps thingWC)
+    private static void FEResetVars(ThingWithComps thingWC)
     {
         if (thingWC == null || thingWC.def.defName != FEDefName && thingWC.def.defName != FBDefName)
         {

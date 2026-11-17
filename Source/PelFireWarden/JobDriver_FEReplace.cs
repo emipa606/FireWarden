@@ -12,7 +12,7 @@ public class JobDriver_FEReplace : JobDriver
         return pawn.Reserve(job.targetA, job);
     }
 
-    private void FEReplaceThing(Pawn replacePawn, Thing togo, Thing tofill, bool Deltogo)
+    private static void FEReplaceThing(Pawn replacePawn, Thing togo, Thing tofill, bool Deltogo)
     {
         if (Deltogo)
         {
